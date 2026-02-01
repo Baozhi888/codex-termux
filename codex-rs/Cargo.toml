@@ -293,13 +293,13 @@ unwrap_used = "deny"
 ignored = ["icu_provider", "openssl-sys", "codex-utils-readiness"]
 
 [profile.release]
-lto = "fat"
+# Termux: keep memory usage manageable during release builds
+lto = false            # Upstream: "fat"
+codegen-units = 16     # Upstream: 1
+opt-level = 3
 # Because we bundle some of these executables with the TypeScript CLI, we
 # remove everything to make the binary as small as possible.
 strip = "symbols"
-
-# See https://github.com/openai/codex/issues/1411 for details.
-codegen-units = 1
 
 [profile.ci-test]
 debug = 1         # Reduce debug symbol size
