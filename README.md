@@ -12,7 +12,7 @@
 
 Built from upstream OpenAI Codex source, compiled for Linux x64 and Android Termux. Since Termux is not officially supported by upstream, we apply minimal patches only for critical compatibility issues.
 
-### Termux Edition (0.93.0)
+### Termux Edition (0.95.0)
 
 This repo maintains **two release lines**:
 
@@ -102,7 +102,7 @@ npm install -g @mmmbuto/codex-cli-termux
 
 ```bash
 codex --version
-# Output: codex-cli 0.93.0
+# Output: codex-cli 0.95.0
 
 codex login
 # Opens browser for authentication
@@ -126,30 +126,49 @@ codex login
 codex
 ```
 
-### Path 2 — GLM-4.7 (Zhipu ZAI) / GLM-4.7 (智谱 ZAI)
-Use Zhipu's GLM-4.7 model optimized for coding scenarios.
-使用智谱的 GLM-4.7 模型（专为编程场景优化）。
+### Path 2 — /chat providers with codex-lts (dual install)
+Use this when a provider requires `wire_api = "chat"`. Since Codex v0.95.0+ deprecates `wire_api` in the **global** config, keep it out of `~/.codex/config.toml` and pass it inline only to the LTS binary.
+
+**Warning (v0.95.0+):** putting `wire_api = "chat"` in the global config breaks the main `codex` install. Use inline `-c` overrides **only** for `codex-lts`.
 
 **Quick setup / 快速配置:**
 ```bash
-# 1. Add API key to ~/.zshrc (bash users: use ~/.bashrc)
-echo 'export ZAI_API_KEY="your-zai-api-key"' >> ~/.zshrc
+# Latest global (responses-compatible)
+npm install -g @mmmbuto/codex-cli-termux
 
-# 2. Add alias for GLM-4.7
-cat >> ~/.zshrc << 'ALIAS_EOF'
-
-# Codex CLI with GLM-4.7 (Coding Plan - dedicated endpoint)
-alias codex-glm='OPENAI_API_KEY="$ZAI_API_KEY" codex -m "GLM-4.7" -c model_provider="zai"'
-ALIAS_EOF
-
-# 3. Reload shell and test
-source ~/.zshrc
-codex-glm "Say hello in Chinese"
+# LTS local (avoid name clash with global)
+mkdir -p ~/.local/codex-lts
+cd ~/.local/codex-lts
+npm init -y
+npm install @mmmbuto/codex-cli-lts
 ```
 
-If your ZAI setup requires a base URL, export `OPENAI_BASE_URL=...` — see [docs/GLM4.7-quickstart.md](./docs/GLM4.7-quickstart.md).
+**Global config (NO wire_api):**
+```toml
+# ~/.codex/config.toml
+[model_providers.chat-a]
+name = "Chat-A"
+base_url = "https://api.example.com/v1"
+env_key = "CHAT_A_API_KEY"
+models = ["model-1", "model-2"]
+```
 
-**Full docs / 完整文档:** [docs/GLM4.7-quickstart.md](./docs/GLM4.7-quickstart.md)
+**Alias for LTS with inline wire_api:**
+```bash
+cat >> ~/.zshrc << 'ALIAS_EOF'
+codex-chat-a() {
+  CHAT_A_API_KEY="$CHAT_A_API_KEY" \
+  ~/.local/codex-lts/node_modules/.bin/codex \
+    -c model="model-1" \
+    -c model_provider="chat-a" \
+    -c 'model_providers.chat-a.wire_api="chat"' \
+    "$@"
+}
+ALIAS_EOF
+
+source ~/.zshrc
+codex-chat-a "hello from a /chat provider"
+```
 
 ### Path 3 — OpenRouter & gateways / OpenRouter 与兼容网关
 For OpenRouter or other OpenAI-compatible providers.
@@ -175,7 +194,6 @@ Providers/models are determined by your own config and backend.
 提供商与模型由你的配置与后端决定。
 
 For detailed setup guides, see:
-- **GLM-4.7**: [docs/GLM4.7-quickstart.md](./docs/GLM4.7-quickstart.md)
 - **OpenRouter**: [docs/openrouter-quickstart.md](./docs/openrouter-quickstart.md)
 
 ---
@@ -237,7 +255,7 @@ Common Termux issues and the fastest places to check.
 - Upgrade alerts or shared library errors: see [docs/termux-upgrade-checks.md](./docs/termux-upgrade-checks.md)
 - Basic usage/setup: see [docs/getting-started.md](./docs/getting-started.md)
 - Authentication/login problems: see [docs/authentication.md](./docs/authentication.md)
-- GLM-4.7 setup: see [docs/GLM4.7-quickstart.md](./docs/GLM4.7-quickstart.md)
+- /chat provider setup: see “Path 2 — /chat providers with codex-lts” above
 - Still stuck? Open an issue with repro steps: [GitHub Issues](https://github.com/DioNanos/codex-termux/issues)
 
 ---
@@ -245,7 +263,7 @@ Common Termux issues and the fastest places to check.
 
 ## 🧪 Testing & Validation
 
-**v0.95.0-termux** (2026-02-01): 18 tests, 18 passed / 0 failed / 1 warning — see [CODEX_TEST_REPORT_v0.93.0.md](./CODEX_TEST_REPORT_v0.93.0.md)
+**v0.95.0-termux** (2026-02-04): 20 tests, 20 passed / 0 failed / 1 warning — see [CODEX_TEST_REPORT_v0.95.0.md](./CODEX_TEST_REPORT_v0.95.0.md)
 **LTS validation** (2026-02-02): All categories PASS — see [CODEX_TEST_REPORT_v0.80.3-lts_termux.md](./CODEX_TEST_REPORT_v0.80.3-lts_termux.md)
 **LTS Linux** (2026-01-31): 62 tests, 60 passed / 0 failed / 11 skipped — see [CODEX_TEST_REPORT_v0.80.3-lts_linux.md](./CODEX_TEST_REPORT_v0.80.3-lts_linux.md)
 
@@ -406,7 +424,7 @@ See [LICENSE](./LICENSE) file for details.
 
 ---
 
-**Version**: Based on OpenAI Codex rust-v0.93.0 with Termux compatibility patches
+**Version**: Based on OpenAI Codex rust-v0.95.0 with Termux compatibility patches
 **Platform**: Android Termux ARM64
 **Maintained**: Community-driven, not affiliated with OpenAI
 

@@ -58,7 +58,7 @@ const VERSION_FILENAME: &str = "version.json";
 // We use the latest version from the cask if installation is via homebrew - homebrew does not immediately pick up the latest release and can lag behind.
 const HOMEBREW_CASK_URL: &str =
     "https://raw.githubusercontent.com/Homebrew/homebrew-cask/HEAD/Casks/c/codex.rb";
-const LATEST_RELEASE_URL: &str = "https://api.github.com/repos/openai/codex/releases/latest";
+const LATEST_RELEASE_URL: &str = "https://api.github.com/repos/DioNanos/codex-termux/releases/latest";
 
 #[derive(Deserialize, Debug, Clone)]
 struct ReleaseInfo {
@@ -136,10 +136,13 @@ fn extract_version_from_cask(cask_contents: &str) -> anyhow::Result<String> {
 }
 
 fn extract_version_from_latest_tag(latest_tag_name: &str) -> anyhow::Result<String> {
-    latest_tag_name
+    let version = latest_tag_name
         .strip_prefix("rust-v")
-        .map(str::to_owned)
-        .ok_or_else(|| anyhow::anyhow!("Failed to parse latest tag name '{latest_tag_name}'"))
+        .or_else(|| latest_tag_name.strip_prefix('v'))
+        .ok_or_else(|| anyhow::anyhow!("Failed to parse latest tag name '{latest_tag_name}'"))?;
+
+    let clean_version = version.split('-').next().unwrap_or(version);
+    Ok(clean_version.to_string())
 }
 
 /// Returns the latest version to show in a popup, if it should be shown.
@@ -181,7 +184,15 @@ fn parse_version(v: &str) -> Option<(u64, u64, u64)> {
     let mut iter = v.trim().split('.');
     let maj = iter.next()?.parse::<u64>().ok()?;
     let min = iter.next()?.parse::<u64>().ok()?;
-    let pat = iter.next()?.parse::<u64>().ok()?;
+    let pat_str = iter.next()?;
+    let mut pat_parts = pat_str.splitn(2, '-');
+    let pat_num = pat_parts.next()?;
+    if let Some(suffix) = pat_parts.next() {
+        if suffix != "termux" {
+            return None;
+        }
+    }
+    let pat = pat_num.parse::<u64>().ok()?;
     Some((maj, min, pat))
 }
 
@@ -208,11 +219,19 @@ mod tests {
             extract_version_from_latest_tag("rust-v1.5.0").expect("failed to parse version"),
             "1.5.0"
         );
+        assert_eq!(
+            extract_version_from_latest_tag("v1.5.0").expect("failed to parse version"),
+            "1.5.0"
+        );
+        assert_eq!(
+            extract_version_from_latest_tag("v1.5.0-termux").expect("failed to parse version"),
+            "1.5.0"
+        );
     }
 
     #[test]
     fn latest_tag_without_prefix_is_invalid() {
-        assert!(extract_version_from_latest_tag("v1.5.0").is_err());
+        assert!(extract_version_from_latest_tag("1.5.0").is_err());
     }
 
     #[test]
@@ -233,5 +252,10 @@ mod tests {
     fn whitespace_is_ignored() {
         assert_eq!(parse_version(" 1.2.3 \n"), Some((1, 2, 3)));
         assert_eq!(is_newer(" 1.2.3 ", "1.2.2"), Some(true));
+    }
+
+    #[test]
+    fn termux_suffix_is_ignored() {
+        assert_eq!(parse_version("1.2.3-termux"), Some((1, 2, 3)));
     }
 }

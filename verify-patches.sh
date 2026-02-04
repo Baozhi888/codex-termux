@@ -44,7 +44,8 @@ fi
 
 # Patch #9
 echo -n "Patch #9 (Auto-Update Exec): "
-if grep -q "if let Some(action) = exit_info.update_action" codex-rs/tui/src/main.rs; then
+if grep -q "update_action = exit_info.update_action" codex-rs/cli/src/main.rs \
+    && grep -q "run_update_action" codex-rs/cli/src/main.rs; then
     echo "✅ PRESENT"
 else
     echo "❌ MISSING!"; exit 1

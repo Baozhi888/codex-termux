@@ -44,7 +44,7 @@ From the workspace root:
 
 ```bash
 cd codex-rs
-cargo build --release
+cargo build --release -p codex-cli -p codex-exec
 ```
 
 Termux-specific optimizations are already baked into `codex-rs/Cargo.toml`:
@@ -54,16 +54,18 @@ Termux-specific optimizations are already baked into `codex-rs/Cargo.toml`:
 
 These settings are tuned so that the build can complete on RAM‑constrained devices while keeping good runtime performance.
 
-The resulting binary will be:
+The resulting binaries will be:
 
 ```bash
 codex-rs/target/release/codex
+codex-rs/target/release/codex-exec
 ```
 
 You can run it directly:
 
 ```bash
 ./target/release/codex --version
+./target/release/codex-exec --help
 ```
 
 ---
@@ -75,7 +77,8 @@ If you want to test the same layout used by the published npm package:
 ```bash
 cd ../npm-package
 cp ../codex-rs/target/release/codex bin/codex
-chmod +x bin/codex
+cp ../codex-rs/target/release/codex-exec bin/codex-exec
+chmod +x bin/codex bin/codex-exec
 ```
 
 After this, from inside `npm-package/` you can run:
@@ -84,7 +87,7 @@ After this, from inside `npm-package/` you can run:
 node bin/codex.js --version
 ```
 
-This uses the Node.js launcher (`bin/codex.js`) together with your locally built `bin/codex` binary.
+This uses the Node.js launchers (`bin/codex.js` / `bin/codex-exec.js`) together with your locally built binaries.
 
 ---
 
@@ -105,4 +108,3 @@ For maintainers who publish `@mmmbuto/codex-cli-termux`:
    ```
 
 This matches the automated pipeline used in the private build scripts, while keeping all steps reproducible from this public repository.
-

@@ -76,7 +76,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - CODEX_TEST_SUITE v1.2 on Termux (2026-01-08): 49 tests, 47 passed / 0 failed / 2 skipped (WebSearch unavailable; git info skipped outside repo). Package & Binary 8/8 passed; Termux-specific 10/10 passed.
 
 ### Documentation
-- Added GLM-4.7 quickstart guide: [docs/GLM4.7-quickstart.md](./docs/GLM4.7-quickstart.md)
+- Added GLM-4.7 quickstart guide (later removed when docs were generalized)
 - Updated README.md with GLM-4.7 setup instructions in Quickstart section
 
 ---
