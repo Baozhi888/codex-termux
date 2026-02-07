@@ -1,6 +1,6 @@
 # @mmmbuto/codex-cli-termux
 
-> **Latest release line tracking upstream closely, compiled for Android Termux ARM64**
+> **Latest release line tracking upstream OpenAI closely, compiled for Android Termux ARM64**
 
 [![npm](https://img.shields.io/npm/v/@mmmbuto/codex-cli-termux?style=flat-square&logo=npm)](https://www.npmjs.org/package/@mmmbuto/codex-cli-termux)
 [![downloads](https://img.shields.io/npm/dt/@mmmbuto/codex-cli-termux?style=flat-square)](https://www.npmjs.org/package/@mmmbuto/codex-cli-termux)
@@ -12,12 +12,9 @@
 
 Latest release line tracking upstream OpenAI Codex closely, compiled specifically for Android Termux (ARM64).
 
-### Version
+### Supported Platforms
 
-- **Package**: `@mmmbuto/codex-cli-termux`
-- **Version**: `0.98.0-termux` (based on rust-v0.98.0)
-- **Supported**: Android Termux (ARM64) only
-- **Updates**: Tracks upstream releases as they become available
+- Android Termux (ARM64) only
 
 ### What We Do:
 ✅ **Use official OpenAI Codex source** (https://github.com/openai/codex)
@@ -48,43 +45,24 @@ and fix strategies.
 
 ---
 
-## 📋 Prerequisites
+## 📦 Installation
 
 ### Termux (Android ARM64)
 
 ```bash
-# Update Termux packages
+# Update Termux packages and install Node.js
 pkg update && pkg upgrade -y
-
-# Install Node.js
 pkg install nodejs-lts -y
 
-# Verify
-node --version  # v18+ (recommended v22+)
-npm --version   # v6+
-```
-
-**Requirements:**
-- Android 7+ (Termux)
-- ARM64 architecture
-- Node.js >=18 (recommended >=22)
-- ~50MB storage
-
----
-
-## 📦 Installation
-
-```bash
+# Install Latest
 npm install -g @mmmbuto/codex-cli-termux
-```
 
-**Verify:**
-```bash
+# Verify
 codex --version
 codex login
 ```
 
-See [../docs/installation.md](../docs/installation.md) for more details.
+**Requirements:** Android 7+, ARM64, Node.js >=18 (recommended v22+), ~50MB storage
 
 ---
 
@@ -101,37 +79,26 @@ See [../docs/quickstart.md](../docs/quickstart.md) for complete instructions.
 
 ## 📚 Documentation
 
-- [Getting Started](../docs/getting-started.md)
-- [Configuration](../docs/config.md)
-- [Slash Commands](../docs/slash_commands.md)
-- [Sandbox & Approvals](../docs/sandbox.md)
-- [Authentication](../docs/authentication.md)
-- [Skills](../docs/skills.md)
-- [Contributing](../docs/contributing.md)
-- [Open Source Fund](../docs/open-source-fund.md)
+- [Installation Details](../docs/installation.md)
+- [Quickstart](../docs/quickstart.md)
+- [Testing](../docs/testing.md)
+- [Building from Source](../BUILDING.md)
+- [Test Reports](../test-reports/)
+- [Full Documentation](../docs/)
 
 ---
 
 ## 🔧 Project Maintenance
 
-**Codex-Termux** is a community-maintained port enabling AI-powered coding on Android Termux.
+Community-maintained port enabling AI-powered coding on Android Termux. Activities include ARM64 compilation, upstream synchronization, Termux compatibility patches, and documentation.
 
-**Maintenance activities:**
-- 🔨 **ARM64 compilation** - Building native binaries for each upstream release (~18min per build)
-- 🔄 **Upstream synchronization** - Tracking OpenAI Codex updates and merging changes
-- 🐛 **Compatibility patches** - Maintaining Android-specific fixes for Termux environment
-- 📱 **Device testing** - Verification on real ARM64 hardware
-- 📚 **Documentation & support** - Maintaining docs, responding to GitHub issues
-
-**Time investment:** Approximately 20 hours per month for project upkeep.
-
-**Thank you** to all users who have reported issues, provided feedback, and helped improve this project. Your contributions make Codex accessible on mobile platforms.
+**Thank you** to all users who have reported issues, provided feedback, and helped improve this project.
 
 ---
 
 ## 📝 License
 
-This project maintains full compliance with the Apache 2.0 license from OpenAI Codex.
+This project maintains full compliance with Apache 2.0 license from OpenAI Codex.
 
 **Original work**: Copyright OpenAI (https://github.com/openai/codex)
 **Termux port**: Minimal patches for Android compatibility
@@ -148,6 +115,4 @@ See [../LICENSE](../LICENSE) file for details.
 
 ---
 
-**Version**: Based on OpenAI Codex rust-v0.98.0 with Termux compatibility patches
-**Platform**: Android Termux ARM64
 **Maintained**: Community-driven, not affiliated with OpenAI

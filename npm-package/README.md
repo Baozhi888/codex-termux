@@ -1,6 +1,6 @@
 # @mmmbuto/codex-cli-lts
 
-> **Long-term support line based on upstream rust-v0.80.0, stable for compatibility**
+> **Long-term support line based on upstream rust-v0.80.0, minimal features + security patches to maintain /chat compatibility**
 
 [![npm](https://img.shields.io/npm/v/@mmmbuto/codex-cli-lts?style=flat-square&logo=npm)](https://www.npmjs.org/package/@mmmbuto/codex-cli-lts)
 [![downloads](https://img.shields.io/npm/dt/@mmmbuto/codex-cli-lts?style=flat-square)](https://www.npmjs.org/package/@mmmbuto/codex-cli-lts)
@@ -10,14 +10,13 @@
 
 ## What This Is
 
-LTS (Long-term support) release line based on upstream OpenAI Codex rust-v0.80.0. This version focuses on stability and compatibility, supporting both **/chat and /responses** wire APIs.
+LTS (Long-term support) release line based on upstream OpenAI Codex rust-v0.80.0. This version focuses on stability and /chat compatibility with minimal features and security patches.
 
-### Version
+### Supported Platforms
 
-- **Package**: `@mmmbuto/codex-cli-lts`
-- **Version**: `0.80.4-lts` (based on rust-v0.80.0)
-- **Supported**: Linux x64 + Android Termux (ARM64) + macOS arm64 (via CI artifacts/releases)
-- **Updates**: Security and stability backports only
+- Linux x64
+- Android Termux (ARM64)
+- macOS arm64 (via CI artifacts/releases)
 
 ### What We Do:
 ✅ **Use official OpenAI Codex source** (https://github.com/openai/codex)
@@ -48,7 +47,26 @@ and fix strategies.
 
 ---
 
-## 📋 Prerequisites
+## 📦 Installation
+
+### Termux (Android ARM64)
+
+```bash
+# Update Termux packages and install Node.js
+pkg update && pkg upgrade -y
+pkg install nodejs-lts -y
+
+# Install LTS
+npm install -g @mmmbuto/codex-cli-lts
+
+# Verify
+codex --version
+codex login
+```
+
+**Requirements:** Android 7+, ARM64, Node.js >=18 (recommended v22+), ~50MB storage
+
+---
 
 ### Linux (x64)
 
@@ -57,51 +75,21 @@ and fix strategies.
 sudo apt-get update
 sudo apt-get install -y nodejs npm
 
-# Verify
-node --version  # v18+ (recommended v22+)
-npm --version   # v6+
-```
-
-**Requirements:**
-- Linux x64
-- Node.js >=18 (recommended >=22)
-- ~80MB storage
-
-### Termux (Android ARM64)
-
-```bash
-# Update Termux packages
-pkg update && pkg upgrade -y
-
-# Install Node.js
-pkg install nodejs-lts -y
-
-# Verify
-node --version  # v18+ (recommended v22+)
-npm --version   # v6+
-```
-
-**Requirements:**
-- Android 7+ (Termux)
-- ARM64 architecture
-- Node.js >=18 (recommended >=22)
-- ~50MB storage
-
----
-
-## 📦 Installation
-
-```bash
+# Install LTS
 npm install -g @mmmbuto/codex-cli-lts
-```
 
-**Verify:**
-```bash
+# Verify
 codex --version
 codex login
 ```
 
-See [../docs/installation.md](../docs/installation.md) for more details.
+**Requirements:** Linux x64, Node.js >=18 (recommended v22+), ~80MB storage
+
+---
+
+### macOS (arm64)
+
+Download from GitHub [releases](https://github.com/DioNanos/codex-termux/releases) or use CI artifacts.
 
 ---
 
@@ -119,27 +107,18 @@ See [../docs/quickstart.md](../docs/quickstart.md) for complete instructions.
 
 ## 📚 Documentation
 
-- [Getting Started](../docs/getting-started.md)
-- [Configuration](../docs/config.md)
-- [Slash Commands](../docs/slash_commands.md)
-- [Sandbox & Approvals](../docs/sandbox.md)
-- [Authentication](../docs/authentication.md)
-- [Skills](../docs/skills.md)
-- [Contributing](../docs/contributing.md)
-- [Open Source Fund](../docs/open-source-fund.md)
+- [Installation Details](../docs/installation.md)
+- [Quickstart](../docs/quickstart.md)
+- [Testing](../docs/testing.md)
+- [Building from Source](../BUILDING.md)
+- [Test Reports](../test-reports/)
+- [Full Documentation](../docs/)
 
 ---
 
 ## 🔧 Project Maintenance
 
-**Codex-Termux** is a community-maintained port enabling AI-powered coding on Android Termux.
-
-**Maintenance activities:**
-- 🔨 **ARM64 compilation** - Building native binaries for each upstream release
-- 🔄 **Upstream synchronization** - Tracking OpenAI Codex updates and merging changes
-- 🐛 **Compatibility patches** - Maintaining Android-specific fixes for Termux environment
-- 📱 **Device testing** - Verification on real ARM64 hardware
-- 📚 **Documentation & support** - Maintaining docs, responding to GitHub issues
+Community-maintained port enabling AI-powered coding on Android Termux. Activities include ARM64 compilation, upstream synchronization, Termux compatibility patches, and documentation.
 
 **Thank you** to all users who have reported issues, provided feedback, and helped improve this project.
 
@@ -164,6 +143,4 @@ See [../LICENSE](../LICENSE) file for details.
 
 ---
 
-**Version**: Based on OpenAI Codex rust-v0.80.0 with Termux compatibility patches
-**Platform**: Linux x64 + Android Termux ARM64 + macOS arm64
 **Maintained**: Community-driven, not affiliated with OpenAI
