@@ -1,4 +1,4 @@
-# 🤖 Codex CLI - Android Termux & Linux
+# 🤖 Codex CLI - Latest Termux & LTS Termux/Linux/macOS
 
 > **Built from upstream OpenAI Codex source, compiled for Linux x64 + Android Termux (ARM64)**
 
@@ -22,7 +22,7 @@ Built from upstream OpenAI Codex source, compiled for Linux x64 and Android Term
 **Supported Platforms:**
 - Android Termux (ARM64): Latest + LTS
 - Linux x64: LTS
-- macOS arm64: LTS (via GitHub releases/CI artifacts)
+- macOS arm64: LTS (via npm + GitHub releases/CI artifacts)
 
 ---
 
@@ -122,13 +122,8 @@ codex login
 ### macOS (arm64)
 
 ```bash
-# Using Homebrew
-brew install node
-
-# Download and install LTS from GitHub releases
-curl -L https://github.com/DioNanos/codex-termux/releases/latest/download/codex-cli-lts-macos-arm64.tar.gz -o codex-cli-lts-macos-arm64.tar.gz
-tar -xzf codex-cli-lts-macos-arm64.tar.gz
-sudo mv codex codex-exec /usr/local/bin/
+# Using npm
+npm install -g @mmmbuto/codex-cli-lts
 
 # Verify
 codex --version

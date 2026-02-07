@@ -46,13 +46,8 @@ codex login
 ### macOS (arm64)
 
 ```bash
-# Using Homebrew
-brew install node
-
-# Download and install LTS from GitHub releases
-curl -L https://github.com/DioNanos/codex-termux/releases/latest/download/codex-cli-lts-macos-arm64.tar.gz -o codex-cli-lts-macos-arm64.tar.gz
-tar -xzf codex-cli-lts-macos-arm64.tar.gz
-sudo mv codex codex-exec /usr/local/bin/
+# Using npm
+npm install -g @mmmbuto/codex-cli-lts
 
 # Verify
 codex --version
@@ -104,6 +99,11 @@ sudo npm install -g @mmmbuto/codex-cli-lts
 ```
 
 ### macOS Issues
+
+**Permission denied on install:**
+```bash
+sudo npm install -g @mmmbuto/codex-cli-lts
+```
 
 **Binary not found after install:**
 ```bash
