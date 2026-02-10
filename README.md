@@ -8,6 +8,8 @@
 
 ---
 
+![Codex Termux Header](./docs/assets/codex-termux-header.jpg)
+
 ## About
 
 Built from upstream OpenAI Codex source, compiled for Linux x64 and Android Termux. Since Termux is not officially supported by upstream, we apply minimal patches only for critical compatibility issues.
