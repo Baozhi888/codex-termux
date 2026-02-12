@@ -1,26 +1,37 @@
-# @mmmbuto/codex-cli-lts
+# 🤖 Codex CLI - Latest Termux & LTS Termux/Linux/macOS
 
-> **Long-term support line for Linux x64, Android Termux (ARM64), and macOS arm64**
+> **Built from upstream OpenAI Codex source, compiled for Android Termux (ARM64) + LTS Termux/Linux/macOS**
 
-[![npm](https://img.shields.io/npm/v/@mmmbuto/codex-cli-lts?style=flat-square&logo=npm)](https://www.npmjs.org/package/@mmmbuto/codex-cli-lts)
-[![downloads](https://img.shields.io/npm/dt/@mmmbuto/codex-cli-lts?style=flat-square)](https://www.npmjs.org/package/@mmmbuto/codex-cli-lts)
+[![npm termux](https://img.shields.io/npm/v/@mmmbuto/codex-cli-termux?style=flat-square&logo=npm)](https://www.npmjs.org/package/@mmmbuto/codex-cli-termux)
+[![npm lts](https://img.shields.io/npm/v/@mmmbuto/codex-cli-lts?style=flat-square&logo=npm)](https://www.npmjs.org/package/@mmmbuto/codex-cli-lts)
 [![ko-fi](https://img.shields.io/badge/☕_Support-Ko--fi-FF5E5B?style=flat-square&logo=ko-fi)](https://ko-fi.com/dionanos)
 
 ---
 
+![Codex Termux Header](../docs/assets/codex-termux-header.jpg)
+
 ## About
 
-LTS (Long-term support) release line based on upstream OpenAI Codex rust-v0.80.0. This version focuses on stability and /chat compatibility with minimal features and security patches.
+Built from upstream OpenAI Codex source, compiled for Linux x64 and Android Termux. Since Termux is not officially supported by upstream, we apply minimal patches only for critical compatibility issues.
 
-### Supported Platforms
+### Release Lines
 
-- Linux x64
-- Android Termux (ARM64)
-- macOS arm64 (via npm)
+- **Latest**: Termux-only, tracks upstream OpenAI closely
+- **LTS**: Long-term support based on upstream rust-v0.80.0, minimal features + security patches to maintain /chat compatibility
+
+**Supported Platforms:**
+- Android Termux (ARM64): Latest + LTS
+- Linux x64: LTS
+- macOS arm64: LTS (via npm + GitHub releases/CI artifacts)
 
 ---
 
 ## Project Scope
+
+### Latest (Termux-only)
+- Compiles for ARM64 native on Android Termux
+- Tracks upstream OpenAI closely
+- Applies minimal patches for Termux-specific compatibility
 
 ### LTS (Multi-platform)
 - Based on upstream rust-v0.80.0
@@ -44,21 +55,21 @@ LTS (Long-term support) release line based on upstream OpenAI Codex rust-v0.80.0
 
 ## Patches & Updates
 
-### LTS Updates
-- Based on rust-v0.80.0 (minimal features + security only)
-- Maintains /chat wire API compatibility
-- Stability-focused for production use
-
 ### Latest Patches
 We apply patches for issues that:
 - **Prevent Codex from working on Termux**
 - **Are not addressed by upstream** (Termux is not officially supported)
 - **Are minimal and well-documented**
 
-**Current patches**: See [../patches/](../patches/) directory for full documentation.
+**Current patches**: See [patches/](../patches/) directory for full documentation.
+
+### LTS Updates
+- Based on rust-v0.80.0 (minimal features + security only)
+- Maintains /chat wire API compatibility
+- Stability-focused for production use
 
 Need help debugging upgrade alerts? See
-[../docs/termux-upgrade-checks.md](../docs/termux-upgrade-checks.md) for known causes
+[docs/termux-upgrade-checks.md](../docs/termux-upgrade-checks.md) for known causes
 and fix strategies.
 
 **Found an issue?** Well-documented bug reports with reproduction steps are welcome! Open an [issue](https://github.com/DioNanos/codex-termux/issues).
@@ -74,7 +85,10 @@ and fix strategies.
 pkg update && pkg upgrade -y
 pkg install nodejs-lts -y
 
-# Install LTS
+# Latest (tracks upstream)
+npm install -g @mmmbuto/codex-cli-termux
+
+# OR LTS (stable, /chat compatible)
 npm install -g @mmmbuto/codex-cli-lts
 
 # Verify
@@ -93,7 +107,7 @@ codex login
 sudo apt-get update
 sudo apt-get install -y nodejs npm
 
-# Install LTS
+# LTS (Linux support)
 npm install -g @mmmbuto/codex-cli-lts
 
 # Verify
@@ -145,7 +159,7 @@ This project maintains full compliance with Apache 2.0 license from OpenAI Codex
 **Original work**: Copyright OpenAI (https://github.com/openai/codex)
 **Termux port**: Minimal patches for Android compatibility
 
-See [../LICENSE](../LICENSE) file for details.
+See [LICENSE](../LICENSE) file for details.
 
 ---
 
