@@ -56,8 +56,11 @@ codex-exec --help
 Non-interactive sanity:
 
 ```bash
-codex-exec --json "print current directory and list files"
-codex-exec --json "create hello.txt with content 'hello' and then read it"
+# NOTE: Recent upstream builds can refuse to run outside a trusted directory.
+# If you see: "Not inside a trusted directory and --skip-git-repo-check was not specified."
+# rerun with --skip-git-repo-check (as below), or run inside a trusted git repo.
+codex-exec --skip-git-repo-check --json "print current directory and list files"
+codex-exec --skip-git-repo-check --json "create hello.txt with content 'hello' and then read it"
 ```
 
 Termux checks:
