@@ -1,7 +1,7 @@
 # 🔧 Termux Compatibility Patches
 
 This document describes the Termux‑specific patches applied to the official OpenAI Codex CLI so that it works well on Android Termux (ARM64).
-Validated for: **v0.100.0-termux** (built from upstream `rust-v0.100.0`).
+Validated for: **v0.101.0-termux** (built from upstream `rust-v0.101.0`).
 
 ---
 
@@ -607,7 +607,7 @@ codex --version  # Should show latest version
 ### Bash Execution (Historical - Resolved Upstream)
 - **Patch #8**: Fix bash execution in Agent mode (shell detection, LD_*, sandbox)
 
-For the current **0.80.0-termux** release, active patches are **#1–#6, and #9**. Patch #8 is no longer required (resolved upstream in v0.80.0).. All are critical for correct behavior on Termux. Patch **#7** remains historical (0.55.x only).
+For the current **v0.101.0-termux** release, active patches are **#1–#6 and #9**. Patch #8 is no longer required (resolved upstream in v0.80.0). Patch **#7** remains historical (0.55.x only).
 
 ---
 
@@ -628,11 +628,11 @@ For the current **0.80.0-termux** release, active patches are **#1–#6, and #9*
 ## Testing Checklist
 
 Before each release:
-- [ ] `codex --version` shows correct upstream version (0.73.0)
+- [ ] `codex --version` shows correct upstream version (0.101.0)
 - [ ] `codex login` opens browser without crash
 - [ ] OAuth flow completes successfully
-- [ ] Binary size < 50MB
-- [ ] Compilation completes on an 8GB ARM64 reference device
+- [ ] Binary size is within expected Termux limits (`codex` < 100MB, `codex-exec` < 70MB)
+- [ ] Compilation completes on the build host without OOM (Termux Patch #2 settings)
 - [ ] Auto-update checks correct URL
 - [ ] Agent mode bash execution works
 
@@ -650,11 +650,11 @@ We only accept patches for Termux-specific issues, not general feature requests.
 
 ---
 
-**Last Updated**: 2025-12-18
-**Patches Applied**: 8 (revalidated for v0.80.0-termux)
-**Based on**: OpenAI Codex rust-v0.73.0
+**Last Updated**: 2026-02-15
+**Patches Applied**: 7 (active: #1–#6, #9)
+**Based on**: OpenAI Codex rust-v0.101.0
 **Platform**: Android Termux ARM64
-**Upstream Changes**: 0.72.0 → 0.73.0 (skills manager rework, ghost snapshots v2, wrap algorithm FirstFit, stability fixes)
+**Upstream Changes**: rust-v0.100.0 → rust-v0.101.0
 
 ---
 
