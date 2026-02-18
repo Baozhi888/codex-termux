@@ -253,6 +253,14 @@ impl NetworkProxy {
     pub fn apply_to_env(&self, _env: &mut HashMap<String, String>) {
         // Android/Termux: managed proxy is disabled; do not inject proxy env vars.
     }
+
+    pub fn apply_to_env_for_attempt(
+        &self,
+        _env: &mut HashMap<String, String>,
+        _attempt_id: Option<&str>,
+    ) {
+        // Android/Termux: no-op
+    }
 }
 
 impl NetworkProxyBuilder {
@@ -284,8 +292,6 @@ impl NetworkProxyHandle {
 }
 
 pub fn host_and_port_from_network_addr(network_addr: &str, default_port: u16) -> String {
-    // Very small parser: we only need to support the typical values in config (`http://host:port`)
-    // and return a "host:port" string.
     let trimmed = network_addr.trim();
     if trimmed.is_empty() {
         return format!("127.0.0.1:{default_port}");
@@ -304,4 +310,122 @@ pub fn host_and_port_from_network_addr(network_addr: &str, default_port: u16) ->
     } else {
         format!("{without_scheme}:{default_port}")
     }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum NetworkDecision {
+    Allow,
+    Deny,
+    Ask,
+}
+
+impl NetworkDecision {
+    pub fn allow() -> Self {
+        Self::Allow
+    }
+
+    pub fn deny() -> Self {
+        Self::Deny
+    }
+
+    pub fn ask(reason: &str) -> Self {
+        let _ = reason;
+        Self::Ask
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum NetworkDecisionSource {
+    Policy,
+    User,
+    Decider,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct NetworkPolicyDecision {
+    pub decision: NetworkDecision,
+    pub source: NetworkDecisionSource,
+    pub reason: Option<String>,
+}
+
+impl NetworkPolicyDecision {
+    pub fn allow() -> Self {
+        Self {
+            decision: NetworkDecision::Allow,
+            source: NetworkDecisionSource::Policy,
+            reason: None,
+        }
+    }
+
+    pub fn deny() -> Self {
+        Self {
+            decision: NetworkDecision::Deny,
+            source: NetworkDecisionSource::Policy,
+            reason: None,
+        }
+    }
+
+    pub fn ask(reason: &str) -> Self {
+        Self {
+            decision: NetworkDecision::Ask,
+            source: NetworkDecisionSource::Policy,
+            reason: Some(reason.to_string()),
+        }
+    }
+
+    // Android stub variants
+    pub const Deny: Self = Self {
+        decision: NetworkDecision::Deny,
+        source: NetworkDecisionSource::Policy,
+        reason: None,
+    };
+
+    pub const Ask: Self = Self {
+        decision: NetworkDecision::Ask,
+        source: NetworkDecisionSource::Policy,
+        reason: None,
+    };
+}
+
+#[derive(Debug, Clone)]
+pub struct NetworkPolicyRequest {
+    pub url: String,
+    pub method: String,
+}
+
+#[derive(Debug, Clone)]
+pub struct NetworkPolicyRequestArgs {
+    pub url: String,
+    pub method: String,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum NetworkProtocol {
+    Http,
+    Https,
+    Socks5,
+}
+
+#[derive(Debug, Clone)]
+pub struct BlockedRequest {
+    pub url: String,
+    pub host: String,
+    pub reason: String,
+}
+
+#[derive(Debug, Clone)]
+pub struct BlockedRequestArgs {
+    pub url: String,
+    pub host: String,
+    pub reason: String,
+}
+
+#[async_trait]
+pub trait NetworkPolicyDecider: Send + Sync + 'static {
+    async fn evaluate(&self, _request: &NetworkPolicyRequest) -> NetworkPolicyDecision;
+}
+
+#[async_trait]
+pub trait BlockedRequestObserver: Send + Sync + 'static {
+    async fn on_blocked(&self, _blocked: &BlockedRequest);
 }
