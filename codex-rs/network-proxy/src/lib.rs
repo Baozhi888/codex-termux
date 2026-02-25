@@ -8,11 +8,13 @@ pub use android_stub::*;
 #[cfg(not(target_os = "android"))]
 mod admin;
 #[cfg(not(target_os = "android"))]
+mod certs;
+#[cfg(not(target_os = "android"))]
 mod config;
 #[cfg(not(target_os = "android"))]
 mod http_proxy;
 #[cfg(not(target_os = "android"))]
-mod metadata;
+mod mitm;
 #[cfg(not(target_os = "android"))]
 mod network_policy;
 #[cfg(not(target_os = "android"))]
@@ -53,6 +55,8 @@ pub use network_policy::NetworkPolicyRequest;
 pub use network_policy::NetworkPolicyRequestArgs;
 #[cfg(not(target_os = "android"))]
 pub use network_policy::NetworkProtocol;
+#[cfg(not(target_os = "android"))]
+pub use policy::normalize_host;
 
 #[cfg(not(target_os = "android"))]
 pub use proxy::ALL_PROXY_ENV_KEYS;
@@ -79,6 +83,8 @@ pub use proxy::proxy_url_env_value;
 
 #[cfg(not(target_os = "android"))]
 pub use runtime::BlockedRequest;
+#[cfg(not(target_os = "android"))]
+pub use runtime::BlockedRequestArgs;
 #[cfg(not(target_os = "android"))]
 pub use runtime::BlockedRequestObserver;
 #[cfg(not(target_os = "android"))]
