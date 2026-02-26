@@ -171,4 +171,7 @@ See [LICENSE](./LICENSE) file for details.
 
 ---
 
-**Maintained**: Community-driven, not affiliated with OpenAI
+## License
+
+MIT License — Copyright (c) 2026 Davide A. Guglielmi<br>
+Made in Italy 🇮🇹

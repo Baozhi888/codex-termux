@@ -8,7 +8,7 @@
 
 ---
 
-![Codex Termux Header](../docs/assets/codex-termux-header.jpg)
+![Codex Termux Header](./docs/assets/codex-termux-header.jpg)
 
 ## About
 
@@ -61,7 +61,7 @@ We apply patches for issues that:
 - **Are not addressed by upstream** (Termux is not officially supported)
 - **Are minimal and well-documented**
 
-**Current patches**: See [patches/](../patches/) directory for full documentation.
+**Current patches**: See [patches/README.md](./patches/README.md) for full documentation.
 
 ### LTS Updates
 - Based on rust-v0.80.0 (minimal features + security only)
@@ -69,7 +69,7 @@ We apply patches for issues that:
 - Stability-focused for production use
 
 Need help debugging upgrade alerts? See
-[docs/termux-upgrade-checks.md](../docs/termux-upgrade-checks.md) for known causes
+[docs/termux-upgrade-checks.md](./docs/termux-upgrade-checks.md) for known causes
 and fix strategies.
 
 **Found an issue?** Well-documented bug reports with reproduction steps are welcome! Open an [issue](https://github.com/DioNanos/codex-termux/issues).
@@ -136,11 +136,11 @@ codex login
 
 ## 📚 Documentation
 
-- [Installation Details](../docs/installation.md)
-- [Testing](../docs/testing.md)
-- [Building from Source](../BUILDING.md)
-- [Test Reports](../test-reports/)
-- [Full Documentation](../docs/)
+- [Installation Details](./docs/installation.md)
+- [Testing](./docs/testing.md)
+- [Building from Source](./BUILDING.md)
+- [Test Reports](./test-reports/)
+- [Full Documentation](./docs/)
 
 ---
 
@@ -159,7 +159,7 @@ This project maintains full compliance with Apache 2.0 license from OpenAI Codex
 **Original work**: Copyright OpenAI (https://github.com/openai/codex)
 **Termux port**: Minimal patches for Android compatibility
 
-See [LICENSE](../LICENSE) file for details.
+See [LICENSE](./LICENSE) file for details.
 
 ---
 
@@ -171,4 +171,7 @@ See [LICENSE](../LICENSE) file for details.
 
 ---
 
-**Maintained**: Community-driven, not affiliated with OpenAI
+## License
+
+MIT License — Copyright (c) 2026 Davide A. Guglielmi<br>
+Made in Italy 🇮🇹

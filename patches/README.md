@@ -1,17 +1,17 @@
 # 🔧 Termux Compatibility Patches
 
 This document describes the Termux‑specific patches applied to the official OpenAI Codex CLI so that it works well on Android Termux (ARM64).
-Validated for: **v0.104.0-termux** (built from upstream `rust-v0.104.0`).
+Validated for: **v0.105.0-termux** (built from upstream `rust-v0.105.0`).
 
 ---
 
 ## Patch List
 
-### 0. Android Stub API Alignment (v0.104.0 merge fix)
+### 0. Android Stub API Alignment (v0.104.0+ merge fix)
 
 **File**: `codex-rs/network-proxy/src/android_stub.rs`  
-**Date Applied**: 2026-02-18  
-**Upstream Context**: merge of `rust-v0.104.0`
+**Date Applied**: 2026-02-25 (extended; originally introduced 2026-02-18)  
+**Upstream Context**: merges of `rust-v0.104.0` and `rust-v0.105.0`
 
 #### Problem
 After merging upstream `0.104.0`, Android/Termux build failed because the
@@ -25,7 +25,7 @@ used by `codex-core`:
   `BlockedRequestObserver`
 
 #### Solution
-Extended `android_stub.rs` to mirror the API expected by upstream `0.104.0`:
+Extended `android_stub.rs` to mirror the API expected by upstream `0.104.0+`:
 
 - Added builder methods:
   - `policy_decider`, `policy_decider_arc`
@@ -37,6 +37,10 @@ Extended `android_stub.rs` to mirror the API expected by upstream `0.104.0`:
   - `NetworkDecision::{deny, ask, deny_with_source, ask_with_source}`
   - `NetworkPolicyRequest::new(...)`
   - `BlockedRequest::new(...)`
+- Added v0.105.0 follow-up compatibility items:
+  - `normalize_host(...)`
+  - `NetworkProxy::{add_allowed_domain, add_denied_domain}`
+  - `dangerously_allow_all_unix_sockets` fields in Android stub config/constraints
 - Updated trait signatures and added impls for `Arc<T>` and closures to match
   usage in core.
 

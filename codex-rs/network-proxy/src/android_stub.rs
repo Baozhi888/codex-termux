@@ -50,6 +50,8 @@ pub struct NetworkProxySettings {
     #[serde(default)]
     pub dangerously_allow_non_loopback_admin: bool,
     #[serde(default)]
+    pub dangerously_allow_all_unix_sockets: bool,
+    #[serde(default)]
     pub mode: NetworkMode,
     #[serde(default)]
     pub allowed_domains: Vec<String>,
@@ -73,6 +75,7 @@ impl Default for NetworkProxySettings {
             allow_upstream_proxy: true,
             dangerously_allow_non_loopback_proxy: false,
             dangerously_allow_non_loopback_admin: false,
+            dangerously_allow_all_unix_sockets: false,
             mode: NetworkMode::default(),
             allowed_domains: Vec::new(),
             denied_domains: Vec::new(),
@@ -89,6 +92,7 @@ pub struct NetworkProxyConstraints {
     pub allow_upstream_proxy: Option<bool>,
     pub dangerously_allow_non_loopback_proxy: Option<bool>,
     pub dangerously_allow_non_loopback_admin: Option<bool>,
+    pub dangerously_allow_all_unix_sockets: Option<bool>,
     pub allowed_domains: Option<Vec<String>>,
     pub denied_domains: Option<Vec<String>>,
     pub allow_unix_sockets: Option<Vec<String>>,
@@ -108,6 +112,7 @@ pub struct PartialNetworkConfig {
     pub allow_upstream_proxy: Option<bool>,
     pub dangerously_allow_non_loopback_proxy: Option<bool>,
     pub dangerously_allow_non_loopback_admin: Option<bool>,
+    pub dangerously_allow_all_unix_sockets: Option<bool>,
     #[serde(default)]
     pub allowed_domains: Option<Vec<String>>,
     #[serde(default)]
@@ -251,6 +256,14 @@ impl NetworkProxy {
         self.admin_addr
     }
 
+    pub async fn add_allowed_domain(&self, _host: &str) -> Result<()> {
+        Ok(())
+    }
+
+    pub async fn add_denied_domain(&self, _host: &str) -> Result<()> {
+        Ok(())
+    }
+
     pub fn apply_to_env(&self, _env: &mut HashMap<String, String>) {
         // Android/Termux: managed proxy is disabled; do not inject proxy env vars.
     }
@@ -333,6 +346,27 @@ pub fn host_and_port_from_network_addr(network_addr: &str, default_port: u16) ->
     } else {
         format!("{without_scheme}:{default_port}")
     }
+}
+
+pub fn normalize_host(host: &str) -> String {
+    let host = host.trim();
+    if host.starts_with('[')
+        && let Some(end) = host.find(']')
+    {
+        return normalize_dns_host(&host[1..end]);
+    }
+
+    if host.bytes().filter(|b| *b == b':').count() == 1 {
+        let host = host.split(':').next().unwrap_or_default();
+        return normalize_dns_host(host);
+    }
+
+    normalize_dns_host(host)
+}
+
+fn normalize_dns_host(host: &str) -> String {
+    let host = host.to_ascii_lowercase();
+    host.trim_end_matches('.').to_string()
 }
 
 #[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq)]
