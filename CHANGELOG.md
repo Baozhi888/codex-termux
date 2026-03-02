@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.106.2-termux] - 2026-03-02
+
+### Packaging Fix
+- Fixed direct binary invocation when `LD_LIBRARY_PATH` is missing.
+- `npm-package/bin/codex` and `npm-package/bin/codex-exec` are now launcher scripts that export a safe `LD_LIBRARY_PATH` and invoke:
+  - `bin/codex.bin`
+  - `bin/codex-exec.bin`
+- This resolves failures such as:
+  - `CANNOT LINK EXECUTABLE .../bin/codex: library "libc++_shared.so" not found`
+  when tools invoke package binaries directly (without Node launcher env setup).
+
+### Version
+- npm package bumped: `@mmmbuto/codex-cli-termux@0.106.2-termux`
+- Upstream base remains: `rust-v0.106.0`
+
+### Verification
+- `env -u LD_LIBRARY_PATH ./bin/codex --version` -> PASS
+- `env -u LD_LIBRARY_PATH ./bin/codex-exec --version` -> PASS
+- `node ./bin/codex.js --version` -> PASS
+- `node ./bin/codex-exec.js --version` -> PASS
+
+---
+
 ## [0.88.0-termux] - 2026-01-22
 
 ### Upstream

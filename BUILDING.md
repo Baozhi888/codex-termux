@@ -76,9 +76,9 @@ If you want to test the same layout used by the published npm package:
 
 ```bash
 cd ../npm-package
-cp ../codex-rs/target/release/codex bin/codex
-cp ../codex-rs/target/release/codex-exec bin/codex-exec
-chmod +x bin/codex bin/codex-exec
+cp ../codex-rs/target/release/codex bin/codex.bin
+cp ../codex-rs/target/release/codex-exec bin/codex-exec.bin
+chmod +x bin/codex bin/codex-exec bin/codex.bin bin/codex-exec.bin
 ```
 
 After this, from inside `npm-package/` you can run:

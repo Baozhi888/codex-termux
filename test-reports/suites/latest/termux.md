@@ -72,11 +72,14 @@ Binary architecture guard:
 PKG_BIN_DIR="$(npm root -g)/@mmmbuto/codex-cli-termux/bin"
 file "$PKG_BIN_DIR/codex"
 file "$PKG_BIN_DIR/codex-exec"
+file "$PKG_BIN_DIR/codex.bin"
+file "$PKG_BIN_DIR/codex-exec.bin"
 ```
 
 Expected:
-- both binaries are Linux/Android ELF
-- architecture is `aarch64`/`ARM64`
+- `codex` and `codex-exec` are launcher scripts
+- `codex.bin` and `codex-exec.bin` are Linux/Android ELF
+- ELF architecture is `aarch64`/`ARM64`
 
 Network-path smoke (must not panic):
 
