@@ -28,12 +28,15 @@ fn resume_history(
     let turn_ctx = TurnContextItem {
         turn_id: Some(turn_id.clone()),
         cwd: config.cwd.clone(),
+        current_date: None,
+        timezone: None,
         approval_policy: config.permissions.approval_policy.value(),
         sandbox_policy: config.permissions.sandbox_policy.get().clone(),
         network: None,
         model: previous_model.to_string(),
         personality: None,
         collaboration_mode: None,
+        realtime_active: None,
         effort: config.model_reasoning_effort,
         summary: config
             .model_reasoning_summary

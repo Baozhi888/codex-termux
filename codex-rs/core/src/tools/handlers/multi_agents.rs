@@ -1,3 +1,10 @@
+//! Implements the collaboration tool surface for spawning and managing sub-agents.
+//!
+//! This handler translates model tool calls into `AgentControl` operations and keeps spawned
+//! agents aligned with the live turn that created them. Sub-agents start from the turn's effective
+//! config, inherit runtime-only state such as provider, approval policy, sandbox, and cwd, and
+//! then optionally layer role-specific config on top.
+
 use crate::agent::AgentStatus;
 use crate::agent::exceeds_thread_spawn_depth_limit;
 use crate::codex::Session;
@@ -35,6 +42,7 @@ use serde::Deserialize;
 use serde::Serialize;
 use std::collections::HashMap;
 
+/// Function-tool handler for the multi-agent collaboration API.
 pub struct MultiAgentHandler;
 
 /// Minimum wait timeout to prevent tight polling loops from burning CPU.
@@ -91,6 +99,7 @@ impl ToolHandler for MultiAgentHandler {
 
 mod spawn {
     use super::*;
+    use crate::agent::control::SpawnAgentOptions;
     use crate::agent::role::DEFAULT_ROLE_NAME;
     use crate::agent::role::apply_role_to_config;
 
@@ -103,6 +112,8 @@ mod spawn {
         message: Option<String>,
         items: Option<Vec<UserInput>>,
         agent_type: Option<String>,
+        #[serde(default)]
+        fork_context: bool,
     }
 
     #[derive(Debug, Serialize)]
@@ -155,7 +166,7 @@ mod spawn {
         let result = session
             .services
             .agent_control
-            .spawn_agent(
+            .spawn_agent_with_options(
                 config,
                 input_items,
                 Some(thread_spawn_source(
@@ -163,6 +174,9 @@ mod spawn {
                     child_depth,
                     role_name,
                 )),
+                SpawnAgentOptions {
+                    fork_parent_spawn_call_id: args.fork_context.then(|| call_id.clone()),
+                },
             )
             .await
             .map_err(collab_spawn_error);
@@ -888,6 +902,13 @@ fn input_preview(items: &[UserInput]) -> String {
     parts.join("\n")
 }
 
+/// Builds the base config snapshot for a newly spawned sub-agent.
+///
+/// The returned config starts from the parent's effective config and then refreshes the
+/// runtime-owned fields carried on `turn`, including model selection, reasoning settings,
+/// approval policy, sandbox, and cwd. Role-specific overrides are layered after this step;
+/// skipping this helper and cloning stale config state directly can send the child agent out with
+/// the wrong provider or runtime policy.
 pub(crate) fn build_agent_spawn_config(
     base_instructions: &BaseInstructions,
     turn: &TurnContext,
@@ -922,6 +943,10 @@ fn build_agent_shared_config(turn: &TurnContext) -> Result<Config, FunctionCallE
     Ok(config)
 }
 
+/// Copies runtime-only turn state onto a child config before it is handed to `AgentControl`.
+///
+/// These values are chosen by the live turn rather than persisted config, so leaving them stale
+/// can make a child agent disagree with its parent about approval policy, cwd, or sandboxing.
 fn apply_spawn_agent_runtime_overrides(
     config: &mut Config,
     turn: &TurnContext,
@@ -948,7 +973,7 @@ fn apply_spawn_agent_runtime_overrides(
 
 fn apply_spawn_agent_overrides(config: &mut Config, child_depth: i32) {
     if child_depth >= config.agent_max_depth {
-        config.features.disable(Feature::Collab);
+        let _ = config.features.disable(Feature::Collab);
     }
 }
 
@@ -1108,6 +1133,9 @@ mod tests {
         let manager = thread_manager();
         session.services.agent_control = manager.agent_control();
         let mut config = (*turn.config).clone();
+        let provider = built_in_model_providers()["ollama"].clone();
+        config.model_provider_id = "ollama".to_string();
+        config.model_provider = provider.clone();
         config
             .permissions
             .approval_policy
@@ -1116,6 +1144,7 @@ mod tests {
         turn.approval_policy
             .set(AskForApproval::OnRequest)
             .expect("approval policy should be set");
+        turn.provider = provider;
         turn.config = Arc::new(config);
 
         let invocation = invocation(
@@ -1154,6 +1183,7 @@ mod tests {
             .config_snapshot()
             .await;
         assert_eq!(snapshot.approval_policy, AskForApproval::OnRequest);
+        assert_eq!(snapshot.model_provider_id, "ollama");
     }
 
     #[tokio::test]
@@ -1222,7 +1252,7 @@ mod tests {
             "spawn_agent",
             function_payload(json!({
                 "message": "await this command",
-                "agent_type": "awaiter"
+                "agent_type": "explorer"
             })),
         );
         let output = MultiAgentHandler
