@@ -59,7 +59,7 @@ DETAILED RESULTS:
   - codex-exec --version => codex-exec 0.108.0
 
 - Core / workspace reset: PASS
-  - Workspace created at /data/data/com.termux/files/home/codex-test-workspace.
+- Workspace created at ~/codex-test-workspace.
 
 - Core / help commands: PASS
   - help output returned for codex, codex exec, codex-exec.
