@@ -1,11 +1,11 @@
 # 🧪 Codex CLI - Universal Test Suite
 
-**Version**: 1.2 (Compatible with all Codex versions)
+**Version**: 1.3 (Compatible with all Codex versions)
 **Platform**: Android Termux ARM64
-**Total Tests**: 82 (including 10 Termux-specific + 8 Package Verification)
+**Total Tests**: 84 (including 12 Termux-specific + 8 Package Verification)
 **Purpose**: Automated functional testing for Codex CLI builds
 
-> ⚠️ **v1.2 UPDATE**: Added Category 12 (Package & Binary Verification) after v0.62.0 incident where codex-exec was missing from npm package.
+> ⚠️ **v1.3 UPDATE**: Added dependency crash guards for Android linkage regressions (v0.108.0 class).
 
 ---
 
@@ -688,6 +688,52 @@ cd ~/codex-test-workspace
 
 ---
 
+### TEST-1011: Android Dependency Feature Guard (v0.108.0)
+
+**Action**: Verify audio dependency chain uses shared C++ runtime features
+
+**Tasks**:
+1. Go to source repo `~/Dev/codex-termux/codex-rs`
+2. Run:
+   `cargo tree -p codex-tui -e features --target aarch64-linux-android`
+3. Confirm feature lines include:
+   - `cpal feature "oboe-shared-stdcxx"`
+   - `oboe feature "shared-stdcxx"`
+   - `oboe-sys feature "shared-stdcxx"`
+
+**Expected**: shared-stdcxx feature chain present for Android audio path
+
+**Verify**: All 3 feature markers appear in output
+
+**Note**: Critical to prevent static C++ linker failures seen in v0.108.0 merge cycle
+
+---
+
+### TEST-1012: Android ELF Linkage Guard (No libc++_static)
+
+**Action**: Verify packaged binaries do not require static libc++ runtime
+
+**Tasks**:
+1. Locate package bin dir:
+   `PKG_BIN_DIR="$(npm root -g)/@mmmbuto/codex-cli-termux/bin"`
+2. Resolve ELF tool:
+   `READELF_BIN="$(command -v readelf || command -v llvm-readelf || true)"`
+3. If tool is available, inspect dynamic deps:
+   - `$READELF_BIN -d "$PKG_BIN_DIR/codex.bin"`
+   - `$READELF_BIN -d "$PKG_BIN_DIR/codex-exec.bin"`
+4. Search output for `libc++` and verify runtime choice
+
+**Expected**: no `libc++_static`; shared runtime is used when C++ runtime appears
+
+**Verify**:
+- Output does not contain `libc++_static`
+- If `libc++` appears, it is `libc++_shared.so`
+- `codex --version` and `codex-exec --version` run without linker/runtime crash
+
+**Note**: Skip only if neither `readelf` nor `llvm-readelf` exists
+
+---
+
 ## 📦 Category 12: Package & Binary Verification (CRITICAL)
 
 > ⚠️ **IMPORTANTE**: Questa categoria verifica che TUTTI i componenti siano presenti.
@@ -940,9 +986,13 @@ VERDICT: ✅ PASS / ⚠️ PASS WITH WARNINGS / ❌ FAIL
 
 ---
 
-**Version**: 1.2
-**Last Updated**: 2025-11-22
+**Version**: 1.3
+**Last Updated**: 2026-03-05
 **License**: Apache 2.0 (same as Codex CLI)
+
+**Changelog v1.3**:
+- Added TEST-1011: Android dependency feature guard (`oboe-shared-stdcxx`)
+- Added TEST-1012: Android ELF linkage guard (no `libc++_static`)
 
 **Changelog v1.2**:
 - Added Category 12: Package & Binary Verification (8 tests)

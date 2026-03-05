@@ -94,6 +94,37 @@ Expected:
   `NetworkDecision::ask`, `NetworkDecision::deny`, or `BlockedRequest.decision`)
 - command may succeed or be blocked by policy, but failure must be graceful
 
+## v0.108.0 Dependency Crash Guard (Android audio/linkage)
+
+Source dependency feature guard (maintainer-only, from source repo):
+
+```bash
+cd ~/Dev/codex-termux/codex-rs
+cargo tree -p codex-tui -e features --target aarch64-linux-android | rg -e 'oboe-shared-stdcxx' -e 'oboe feature "shared-stdcxx"' -e 'oboe-sys feature "shared-stdcxx"'
+```
+
+Expected:
+- output includes `oboe-shared-stdcxx` on `cpal`
+- output includes `shared-stdcxx` on `oboe` and `oboe-sys`
+
+Installed binary linkage guard:
+
+```bash
+PKG_BIN_DIR="$(npm root -g)/@mmmbuto/codex-cli-termux/bin"
+READELF_BIN="$(command -v readelf || command -v llvm-readelf || true)"
+if [ -n "$READELF_BIN" ]; then
+  "$READELF_BIN" -d "$PKG_BIN_DIR/codex.bin" | rg "NEEDED|libc\\+\\+"
+  "$READELF_BIN" -d "$PKG_BIN_DIR/codex-exec.bin" | rg "NEEDED|libc\\+\\+"
+else
+  echo "SKIP: readelf/llvm-readelf not available"
+fi
+```
+
+Expected:
+- if a C++ runtime is listed, it must be shared (`libc++_shared.so`)
+- no reference to `libc++_static`
+- no missing-library runtime errors when invoking `codex`/`codex-exec`
+
 Maintainer-only compile guard (optional, from source repo):
 
 ```bash

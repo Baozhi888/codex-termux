@@ -1,0 +1,8 @@
+{"type":"thread.started","thread_id":"019cbb7c-8fe8-7d81-858c-17aa70cce5e6"}
+{"type":"turn.started"}
+{"type":"error","message":"Reconnecting... 1/5 (stream disconnected before completion: An error occurred while processing your request. You can retry your request, or contact us through our help center at help.openai.com if the error persists. Please include the request ID 5115b140-aec3-4962-b0ca-b99e5567377b in your message.)"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"Checking the current working directory and listing files now."}}
+{"type":"item.started","item":{"id":"item_1","type":"command_execution","command":"/bin/sh -lc 'pwd && ls -la'","aggregated_output":"","exit_code":null,"status":"in_progress"}}
+{"type":"item.completed","item":{"id":"item_1","type":"command_execution","command":"/bin/sh -lc 'pwd && ls -la'","aggregated_output":"/data/data/com.termux/files/home/codex-test-workspace\ntotal 8\ndrwx------.  2 u0_a458 u0_a458 3452 Mar  5 01:49 .\ndrwx------. 44 u0_a458 u0_a458 8192 Mar  5 01:50 ..\n","exit_code":0,"status":"completed"}}
+{"type":"item.completed","item":{"id":"item_2","type":"agent_message","text":"`/data/data/com.termux/files/home/codex-test-workspace`\n\nFiles:\n```text\ntotal 8\ndrwx------.  2 u0_a458 u0_a458 3452 Mar  5 01:49 .\ndrwx------. 44 u0_a458 u0_a458 8192 Mar  5 01:50 ..\n```"}}
+{"type":"turn.completed","usage":{"input_tokens":16591,"cached_input_tokens":11648,"output_tokens":191}}

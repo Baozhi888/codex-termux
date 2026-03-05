@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.108.0-termux] - 2026-03-04
+
+### Upstream
+- OpenAI Codex rust-v0.108.0 release: https://github.com/openai/codex/releases/tag/rust-v0.108.0
+- Upstream release notes and details are maintained in the link above.
+
+### Termux Patches
+- Termux patches (#1, #2, #4, #5, #6, #9, #10) revalidated via `verify-patches.sh`.
+- Launcher hardening from 0.106.2 (`codex.bin` / `codex-exec.bin` + safe `LD_LIBRARY_PATH`) retained.
+
+### Version
+- npm package bumped: `@mmmbuto/codex-cli-termux@0.108.0-termux`
+- Upstream base: `rust-v0.108.0`
+
+### Verification
+- `env -u LD_LIBRARY_PATH ./bin/codex --version` -> PASS
+- `env -u LD_LIBRARY_PATH ./bin/codex-exec --version` -> PASS
+- `node ./bin/codex.js --version` -> PASS
+- `node ./bin/codex-exec.js --version` -> PASS
+
+---
+
 ## [0.106.2-termux] - 2026-03-02
 
 ### Packaging Fix

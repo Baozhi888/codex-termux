@@ -6,6 +6,7 @@ Comprehensive test validation for all platforms and release lines.
 
 ### Latest (Termux)
 
+- **v0.108.0-termux**: [test-reports/latest/0.108.0-termux/CODEX_TEST_REPORT_v0.108.0-termux.md](../test-reports/latest/0.108.0-termux/CODEX_TEST_REPORT_v0.108.0-termux.md)
 - **v0.101.0-termux**: [test-reports/latest/0.101.0-termux/CODEX_TEST_REPORT_v0.101.0-termux.md](../test-reports/latest/0.101.0-termux/CODEX_TEST_REPORT_v0.101.0-termux.md)
 - **Extended**: [test-reports/latest/0.101.0-termux/CODEX_TEST_REPORT_v0.101.0-termux_extended.md](../test-reports/latest/0.101.0-termux/CODEX_TEST_REPORT_v0.101.0-termux_extended.md)
 - **v0.100.0-termux**: [test-reports/latest/0.100.0-termux/CODEX_TEST_REPORT_v0.100.0-termux.md](../test-reports/latest/0.100.0-termux/CODEX_TEST_REPORT_v0.100.0-termux.md)
@@ -44,7 +45,7 @@ Comprehensive test validation for all platforms and release lines.
 7. Git Operations (2 tests - optional)
 8. AI Capabilities (3 tests)
 9. Error Handling (3 tests)
-10. **Termux-Specific (10 tests)** ⭐ - Validates all Android patches
+10. **Termux-Specific (12 tests)** ⭐ - Validates Android patches and dependency crash guards
 11. Cleanup (1 test)
 12. **Package & Binary (8 tests)** ⭐ - Validates npm installation and binaries
 
