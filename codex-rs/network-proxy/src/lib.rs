@@ -7,7 +7,6 @@ pub use android_stub::*;
 
 #[cfg(not(target_os = "android"))]
 mod admin;
-#[cfg(not(target_os = "android"))]
 mod certs;
 #[cfg(not(target_os = "android"))]
 mod config;
