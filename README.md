@@ -147,6 +147,7 @@ codex login
 - [Testing](./docs/testing.md)
 - [Building from Source](./BUILDING.md)
 - [Test Reports](./test-reports/)
+- [LTS Changelog](https://github.com/DioNanos/codex-termux/blob/lts/CHANGELOG_LTS.md)
 - [Full Documentation](./docs/)
 
 ---
