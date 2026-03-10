@@ -3,7 +3,7 @@ name: lts-npm-build-publish
 on:
   workflow_dispatch:
     inputs:
-      ref:
+      source_ref:
         description: "Git ref/branch to build (use lts for LTS line)"
         required: true
         type: string
@@ -40,7 +40,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: ${{ inputs.ref }}
+          ref: ${{ github.event.inputs.source_ref }}
 
       - name: Resolve version/tag/sha
         id: meta
@@ -53,8 +53,8 @@ jobs:
               print(json.load(fh)["version"])
           PY
           )"
-          if [[ -n "${{ inputs.release_tag }}" ]]; then
-            release_tag="${{ inputs.release_tag }}"
+          if [[ -n "${{ github.event.inputs.release_tag }}" ]]; then
+            release_tag="${{ github.event.inputs.release_tag }}"
           else
             release_tag="v${version}"
           fi
@@ -76,7 +76,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: ${{ inputs.ref }}
+          ref: ${{ github.event.inputs.source_ref }}
 
       - uses: dtolnay/rust-toolchain@stable
         with:
@@ -124,7 +124,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: ${{ inputs.ref }}
+          ref: ${{ github.event.inputs.source_ref }}
 
       - uses: dtolnay/rust-toolchain@stable
         with:
@@ -173,7 +173,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: ${{ inputs.ref }}
+          ref: ${{ github.event.inputs.source_ref }}
 
       - uses: actions/download-artifact@v4
         with:
@@ -229,17 +229,17 @@ jobs:
           path: npm-package/${{ steps.npm_pack.outputs.tarball }}
 
       - name: npm publish
-        if: ${{ inputs.publish_npm }}
+        if: ${{ github.event.inputs.publish_npm == 'true' }}
         working-directory: npm-package
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish "${{ steps.npm_pack.outputs.tarball }}" --tag "${{ inputs.npm_tag }}"
+        run: npm publish "${{ steps.npm_pack.outputs.tarball }}" --tag "${{ github.event.inputs.npm_tag }}"
 
   release-assets:
     name: Create/update GitHub release assets
     runs-on: ubuntu-24.04
     timeout-minutes: 15
-    if: ${{ inputs.create_release }}
+    if: ${{ github.event.inputs.create_release == 'true' }}
     needs:
       - meta
       - build-linux-x64
@@ -284,5 +284,5 @@ jobs:
             gh release create "${tag}" "${assets[@]}" \
               --target "${target}" \
               --title "${tag}" \
-              --notes "LTS release built from ref '${{ inputs.ref }}'."
+              --notes "LTS release built from ref '${{ github.event.inputs.source_ref }}'."
           fi
