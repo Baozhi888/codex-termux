@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.115.0-termux] - 2026-03-17
+
+### Upstream
+- OpenAI Codex `rust-v0.115.0` release: https://github.com/openai/codex/releases/tag/rust-v0.115.0
+- Upstream includes multiple core/tooling updates and app-server/protocol refreshes.
+
+### Termux Patches
+- Rebased the latest Termux line onto `rust-v0.115.0`.
+- Revalidated Termux patches (#1, #2, #4, #5, #6, #9, #10, #11, #12) via `verify-patches.sh`.
+- Kept Android no-voice policy for Android consumers of `codex-tui`.
+- Kept launcher hardening (`codex.bin` / `codex-exec.bin` plus sanitized `LD_LIBRARY_PATH`).
+- Sanitized Android cross-compile config to remove local machine paths from tracked files.
+
+### Version
+- npm package bumped: `@mmmbuto/codex-cli-termux@0.115.0-termux`
+- Upstream base: `rust-v0.115.0`
+
+### Verification
+- Merge completed on top of `rust-v0.115.0`.
+- `bash verify-patches.sh` passes after merge.
+- Android cross-build + npm tarball assembly prepared for on-device Termux validation before release/publish.
+
+---
+
 ## [0.114.0-termux] - 2026-03-11
 
 ### Upstream

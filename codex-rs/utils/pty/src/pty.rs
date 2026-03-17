@@ -21,11 +21,8 @@ use std::sync::Mutex as StdMutex;
 use std::time::Duration;
 
 use anyhow::Result;
-#[cfg(target_os = "android")]
-use crate::pipe;
-#[cfg(all(not(windows), not(target_os = "android")))]
+#[cfg(not(windows))]
 use portable_pty::native_pty_system;
-#[cfg(not(target_os = "android"))]
 use portable_pty::CommandBuilder;
 use tokio::sync::mpsc;
 use tokio::sync::oneshot;
@@ -50,14 +47,12 @@ pub fn conpty_supported() -> bool {
     true
 }
 
-#[cfg(not(target_os = "android"))]
 struct PtyChildTerminator {
     killer: Box<dyn portable_pty::ChildKiller + Send + Sync>,
     #[cfg(unix)]
     process_group_id: Option<u32>,
 }
 
-#[cfg(not(target_os = "android"))]
 impl ChildTerminator for PtyChildTerminator {
     fn kill(&mut self) -> std::io::Result<()> {
         #[cfg(unix)]
@@ -255,7 +250,6 @@ async fn spawn_process_portable(
         stderr_rx,
         exit_rx,
     })
-    }
 }
 
 #[cfg(unix)]
