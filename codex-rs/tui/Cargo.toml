@@ -43,7 +43,6 @@ codex-otel = { workspace = true }
 codex-protocol = { workspace = true }
 codex-shell-command = { workspace = true }
 codex-state = { workspace = true }
-codex-tui-app-server = { workspace = true }
 codex-utils-approval-presets = { workspace = true }
 codex-utils-absolute-path = { workspace = true }
 codex-utils-cli = { workspace = true }
@@ -128,6 +127,10 @@ winsplit = "0.1"
 # Only include it for non-Android targets so the crate builds on Android.
 [target.'cfg(not(target_os = "android"))'.dependencies]
 arboard = { workspace = true }
+codex-tui-app-server = { workspace = true }
+
+[target.'cfg(target_os = "android")'.dependencies]
+codex-tui-app-server = { path = "../tui_app_server", default-features = false }
 
 
 [dev-dependencies]

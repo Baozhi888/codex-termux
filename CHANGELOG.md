@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.116.0-termux] - 2026-03-20
+
+### Upstream
+- OpenAI Codex `rust-v0.116.0` release: https://github.com/openai/codex/releases/tag/rust-v0.116.0
+- Upstream includes app-server/TUI auth improvements, plugin install flow updates, and realtime stability fixes.
+
+### Termux Patches
+- Rebased the latest Termux line onto `rust-v0.116.0`.
+- Kept Android browser login patch (`termux-open-url`) for auth flow.
+- Kept Android no-voice policy for `codex-tui` consumers on Android.
+- Kept launcher hardening (`codex.bin` / `codex-exec.bin` + sanitized `LD_LIBRARY_PATH`).
+- Kept Android PTY linker shim (`openpty`) in `codex-rs/utils/pty/src/pty.rs`.
+
+### Version
+- npm package target prepared: `@mmmbuto/codex-cli-termux@0.116.0-termux`
+- Upstream base: `rust-v0.116.0`
+
+### Verification (prep cycle)
+- Merge commit created: `Merge upstream rust-v0.116.0 into Termux`.
+- `bash verify-patches.sh` executed in this cycle.
+- Local prep only: no GitHub release, no npm publish.
+
+---
+
 ## [0.115.0-termux] - 2026-03-17
 
 ### Upstream

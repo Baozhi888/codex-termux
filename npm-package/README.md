@@ -1,6 +1,6 @@
 # Codex CLI for Termux
 
-> Latest Android Termux package built from upstream OpenAI Codex `rust-v0.115.0`.
+> Latest Android Termux package built from upstream OpenAI Codex `rust-v0.116.0`.
 
 [![npm termux](https://img.shields.io/npm/v/@mmmbuto/codex-cli-termux?style=flat-square&logo=npm)](https://www.npmjs.org/package/@mmmbuto/codex-cli-termux)
 [![npm lts](https://img.shields.io/npm/v/@mmmbuto/codex-cli-lts?style=flat-square&logo=npm)](https://www.npmjs.org/package/@mmmbuto/codex-cli-lts)
