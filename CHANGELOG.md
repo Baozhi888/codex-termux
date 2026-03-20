@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.116.2-termux] - 2026-03-20
+
+### Fixes
+- Fixed auto-update detection in the `tui_app_server` path to track Termux releases (`DioNanos/codex-termux`) instead of upstream-only latest.
+- Fixed tag parsing in `tui_app_server` updates to accept both `rust-vX.Y.Z` and `vX.Y.Z-termux`.
+- Fixed Termux update command in `tui_app_server` to use `@mmmbuto/codex-cli-termux@latest` for npm/bun global updates.
+- Unified update/release-note links in both TUI implementations to the Termux release channel.
+
+### Version
+- npm package target: `@mmmbuto/codex-cli-termux@0.116.2`
+- Upstream base: `rust-v0.116.0`
+
+---
+
 ## [0.116.0-termux] - 2026-03-20
 
 ### Upstream

@@ -59,7 +59,8 @@ const VERSION_FILENAME: &str = "version.json";
 // immediately pick up the latest release and can lag behind.
 const HOMEBREW_CASK_API_URL: &str = "https://formulae.brew.sh/api/cask/codex.json";
 // Termux: check updates from the fork that publishes `vX.Y.Z-termux` releases.
-const LATEST_RELEASE_URL: &str = "https://api.github.com/repos/DioNanos/codex-termux/releases/latest";
+const LATEST_RELEASE_URL: &str =
+    "https://api.github.com/repos/DioNanos/codex-termux/releases/latest";
 
 #[derive(Deserialize, Debug, Clone)]
 struct ReleaseInfo {

@@ -272,9 +272,7 @@ pub fn prepend_path_entry_for_codex_aliases() -> std::io::Result<Arg0PathEntryGu
         .open(&lock_path)?;
     if let Err(err) = lock_file.try_lock() {
         let io_err: std::io::Error = err.into();
-        if !(cfg!(target_os = "android")
-            && io_err.kind() == std::io::ErrorKind::Unsupported)
-        {
+        if !(cfg!(target_os = "android") && io_err.kind() == std::io::ErrorKind::Unsupported) {
             return Err(io_err);
         }
     }
@@ -398,9 +396,7 @@ fn try_lock_dir(dir: &Path) -> std::io::Result<Option<File>> {
         Err(std::fs::TryLockError::WouldBlock) => Ok(None),
         Err(err) => {
             let io_err: std::io::Error = err.into();
-            if cfg!(target_os = "android")
-                && io_err.kind() == std::io::ErrorKind::Unsupported
-            {
+            if cfg!(target_os = "android") && io_err.kind() == std::io::ErrorKind::Unsupported {
                 Ok(None)
             } else {
                 Err(io_err)

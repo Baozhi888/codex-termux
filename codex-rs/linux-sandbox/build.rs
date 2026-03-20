@@ -36,9 +36,7 @@ fn main() {
     }
 
     if let Err(err) = try_build_vendored_bwrap() {
-        println!(
-            "cargo:warning=vendored bubblewrap disabled for this build: {err}"
-        );
+        println!("cargo:warning=vendored bubblewrap disabled for this build: {err}");
     }
 }
 

@@ -513,7 +513,9 @@ impl HistoryCell for UpdateAvailableHistoryCell {
         } else {
             line![
                 "See ",
-                "https://github.com/openai/codex".cyan().underlined(),
+                "https://www.npmjs.com/package/@mmmbuto/codex-cli-termux"
+                    .cyan()
+                    .underlined(),
                 " for installation options."
             ]
         };
@@ -528,7 +530,7 @@ impl HistoryCell for UpdateAvailableHistoryCell {
             update_instruction,
             "",
             "See full release notes:",
-            "https://github.com/openai/codex/releases/latest"
+            "https://github.com/DioNanos/codex-termux/releases/latest"
                 .cyan()
                 .underlined(),
         ];
