@@ -1,6 +1,6 @@
 # Codex Termux
 
-> Latest line built from upstream OpenAI Codex `rust-v0.116.0` for Android Termux. The separate LTS line remains available for Termux, Linux, and macOS as `@mmmbuto/codex-cli-lts`.
+> Latest line built from upstream OpenAI Codex `rust-v0.117.0` for Android Termux. The separate LTS line remains available for Termux, Linux, and macOS as `@mmmbuto/codex-cli-lts`.
 
 [![npm termux](https://img.shields.io/npm/v/@mmmbuto/codex-cli-termux?style=flat-square&logo=npm)](https://www.npmjs.org/package/@mmmbuto/codex-cli-termux)
 [![npm lts](https://img.shields.io/npm/v/@mmmbuto/codex-cli-lts?style=flat-square&logo=npm)](https://www.npmjs.org/package/@mmmbuto/codex-cli-lts)
@@ -30,6 +30,12 @@ The latest line tracks upstream OpenAI Codex closely and applies only the compat
 ---
 
 ## Project Scope
+
+### Skills 
+- Termux-specific skills are available in `.codex/skills/` directory. 
+- Includes `termux-tts` skill for text-to-speech functionality using `termux-tts-speak` command. 
+- Skills enhance Termux experience without modifying core functionality. 
+
 
 ### Latest (Termux-only)
 - Compiles for ARM64 native on Android Termux

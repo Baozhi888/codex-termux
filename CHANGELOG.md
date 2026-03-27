@@ -1,3 +1,23 @@
+# [0.117.0-termux] - 2026-03-27
+
+### Upstream
+- OpenAI Codex `rust-v0.117.0` release: https://github.com/openai/codex/releases/tag/rust-v0.117.0
+- Upstream includes enhanced plugin workflows, improved sub-agent communication, and expanded app-server capabilities.
+
+### Termux Patches
+- Rebased the latest Termux line onto `rust-v0.117.0`.
+- Kept Android browser login patch (`termux-open-url`) for auth flow.
+- Kept Android no-voice policy for `codex-tui` consumers on Android.
+- Kept launcher hardening (`codex.bin` / `codex-exec.bin` + sanitized `LD_LIBRARY_PATH`).
+- Updated version references to `0.117.0-termux` throughout project.
+
+### Version
+- npm package target: `@mmmbuto/codex-cli-termux@0.117.0`
+- Upstream base: `rust-v0.117.0`
+
+---
+
+
 # Changelog - Codex Termux
 
 All notable changes to this project will be documented in this file.
