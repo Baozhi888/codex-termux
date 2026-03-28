@@ -143,7 +143,6 @@ cd ../npm-package
 cp ../codex-rs/target/release/codex bin/codex.bin
 cp ../codex-rs/target/release/codex-exec bin/codex-exec.bin
 cp "$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/libc++_shared.so" bin/libc++_shared.so
-python3 ../scripts/fix_android_tls_alignment.py bin/codex.bin bin/codex-exec.bin
 chmod +x bin/codex bin/codex-exec bin/codex.bin bin/codex-exec.bin bin/libc++_shared.so
 ```
 
@@ -154,7 +153,6 @@ cd ../npm-package
 cp ../codex-rs/target/aarch64-linux-android/release/codex bin/codex.bin
 cp ../codex-rs/target/aarch64-linux-android/release/codex-exec bin/codex-exec.bin
 cp "$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/libc++_shared.so" bin/libc++_shared.so
-python3 ../scripts/fix_android_tls_alignment.py bin/codex.bin bin/codex-exec.bin
 chmod +x bin/codex bin/codex-exec bin/codex.bin bin/codex-exec.bin bin/libc++_shared.so
 ```
 
@@ -186,8 +184,9 @@ For maintainers who publish `@mmmbuto/codex-cli-termux`:
    crate is not covered by upstream Android assets, fetch the fork-owned pair
    first with `python3 scripts/fetch_rusty_v8_android.py`.
 4. **Copy the binaries and bundled libc++ runtime into the npm wrapper** as in section 4.
-   Then run `python3 ../scripts/fix_android_tls_alignment.py bin/codex.bin bin/codex-exec.bin`
-   so Android ARM64 Bionic accepts the packaged executables.
+   For the `0.117.2-termux` beta line and later, the preferred fix is to build
+   with the Android API 29 linker so the emitted `PT_TLS` layout is already
+   valid for ARM64 Bionic.
 5. **Run release gates** from repo root:
 
    ```bash

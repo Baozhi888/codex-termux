@@ -16,7 +16,9 @@ This npm package is the latest Termux-focused line: `@mmmbuto/codex-cli-termux`.
 If you want the separate multi-platform LTS line, use `@mmmbuto/codex-cli-lts`.
 
 **Supported platform:** Android Termux (ARM64)
-**Current package line:** `0.117.1-termux`
+**Current package line:** `0.117.2-termux` (`beta`)
+
+**Stable latest line:** `0.116.2`
 
 ---
 

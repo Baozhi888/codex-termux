@@ -5,7 +5,7 @@ This file tracks fork-specific changes against upstream OpenAI Codex.
 - Fork repo: `DioNanos/codex-termux`
 - Upstream repo: `openai/codex`
 - Baseline used for this inventory: `rust-v0.117.0`
-- Current fork release: `v0.117.1-termux`
+- Current fork release: `v0.117.2-termux`
 - Last update: 2026-03-27
 
 Scope note:

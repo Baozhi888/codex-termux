@@ -1,7 +1,7 @@
 {
   "name": "@mmmbuto/codex-cli-termux",
-  "version": "0.117.1-termux",
-  "description": "OpenAI Codex CLI (upstream rust-v0.117.0) packaged as 0.117.1-termux for Android Termux (ARM64). Termux build excludes voice/realtime audio to avoid Android linker failures and applies the ARM64 TLS alignment fix required by Bionic. Use 'codex' for TUI and 'codex exec --json' for automation.",
+  "version": "0.117.2-termux",
+  "description": "OpenAI Codex CLI (upstream rust-v0.117.0) packaged as 0.117.2-termux for Android Termux (ARM64). Termux build excludes voice/realtime audio and now targets Android API 29 so ARM64 Bionic gets a valid TLS segment without post-build ELF patching. Use 'codex' for TUI and 'codex exec --json' for automation.",
   "type": "module",
   "main": "bin/codex.js",
   "bin": {

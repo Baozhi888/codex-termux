@@ -1,3 +1,22 @@
+# [0.117.2-termux] - 2026-03-28
+
+### Beta
+- Switched the latest-line Android build target from API 28 to API 29.
+- This beta validates the native ARM64 TLS layout emitted by the Android 29
+  linker, replacing the previous post-build ELF patch attempt.
+- `0.117.2-termux` is intended for the npm `beta` dist-tag while `latest`
+  remains on `0.116.2`.
+
+### Version
+- npm package target: `@mmmbuto/codex-cli-termux@0.117.2-termux`
+- Upstream base: `rust-v0.117.0`
+
+### Verification
+- Rebuild Android ARM64 binaries with the API 29 linker.
+- Confirm `PT_TLS` layout is accepted by Termux/Bionic without a post-build patch.
+
+---
+
 # [0.117.1-termux] - 2026-03-28
 
 ### Hotfix
