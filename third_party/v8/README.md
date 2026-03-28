@@ -52,8 +52,18 @@ python3 scripts/fetch_rusty_v8_android.py
 ```
 
 That helper resolves the pinned crate version, downloads the matching pair from
-the fork release tag, prints SHA256 values, and emits the `RUSTY_V8_ARCHIVE`
-and `RUSTY_V8_SRC_BINDING_PATH` exports needed for Cargo builds.
+the fork release tag, verifies the checksums declared in
+`third_party/v8/android-artifacts.toml`, prints SHA256 values, and emits the
+`RUSTY_V8_ARCHIVE` and `RUSTY_V8_SRC_BINDING_PATH` exports needed for Cargo
+builds.
+
+The manifest is the git-tracked source of truth for Android artifact metadata:
+
+- source `rusty_v8` tag
+- fork release tag
+- target triple
+- archive SHA256
+- binding SHA256
 
 If the Android pair still needs to be produced, build it from a full
 `denoland/rusty_v8` checkout at the matching tag, not from the crates.io source
