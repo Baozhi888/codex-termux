@@ -6,7 +6,7 @@ Comprehensive test validation for all platforms and release lines.
 
 ### Latest (Termux)
 
-- **v0.117.0-termux**: release prep in progress; wrapper/self-exe regression fix landed for `apply_patch`, Android ARM64 packaging and on-device validation still pending
+- **v0.117.1-termux**: hotfix release for Android ARM64 TLS alignment on Bionic; rebuild package, publish npm `latest`, then re-run on-device validation
 - **v0.116.1-termux**: [test-reports/latest/0.116.1-termux/CODEX_TEST_REPORT_v0.116.1-termux.md](../test-reports/latest/0.116.1-termux/CODEX_TEST_REPORT_v0.116.1-termux.md)
 - **Extended**: [test-reports/latest/0.116.1-termux/CODEX_TEST_REPORT_v0.116.1-termux_extended.md](../test-reports/latest/0.116.1-termux/CODEX_TEST_REPORT_v0.116.1-termux_extended.md)
 - **v0.112.0-termux**: [test-reports/latest/0.112.0-termux/CODEX_TEST_REPORT_v0.112.0-termux.md](../test-reports/latest/0.112.0-termux/CODEX_TEST_REPORT_v0.112.0-termux.md)

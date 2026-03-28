@@ -1,3 +1,21 @@
+# [0.117.1-termux] - 2026-03-28
+
+### Hotfix
+- Fixed Android ARM64 packaged executables that failed on Termux/Bionic with:
+  `executable's TLS segment is underaligned ... needs to be at least 64`.
+- Added a maintainer-side ELF patch step for Android ARM64 binaries so
+  `codex.bin` and `codex-exec.bin` ship with a Bionic-compatible TLS alignment.
+
+### Version
+- npm package target: `@mmmbuto/codex-cli-termux@0.117.1-termux`
+- Upstream base: `rust-v0.117.0`
+
+### Verification
+- Android ARM64 binaries rebuilt and patched for TLS alignment before npm pack.
+- Manual on-device Termux validation remains the final post-publish gate.
+
+---
+
 # [0.117.0-termux] - 2026-03-27
 
 ### Upstream
