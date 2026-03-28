@@ -1,11 +1,11 @@
 # [0.117.2-termux] - 2026-03-28
 
-### Beta
+### Release
 - Switched the latest-line Android build target from API 28 to API 29.
-- This beta validates the native ARM64 TLS layout emitted by the Android 29
+- This release validates the native ARM64 TLS layout emitted by the Android 29
   linker, replacing the previous post-build ELF patch attempt.
-- `0.117.2-termux` is intended for the npm `beta` dist-tag while `latest`
-  remains on `0.116.2`.
+- Promoted `0.117.2-termux` to the npm `latest` dist-tag after packaging and
+  launcher validation.
 
 ### Version
 - npm package target: `@mmmbuto/codex-cli-termux@0.117.2-termux`

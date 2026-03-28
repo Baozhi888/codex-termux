@@ -3,7 +3,7 @@
 This repository packages the official OpenAI Codex CLI for Android Termux (ARM64) with a small set of compatibility patches. Most users should install the precompiled npm package:
 
 ```bash
-npm install -g @mmmbuto/codex-cli-termux
+npm install -g @mmmbuto/codex-cli-termux@latest
 ```
 
 If you want or need to build the binary yourself, follow the steps below.

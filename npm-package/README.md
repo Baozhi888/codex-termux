@@ -16,9 +16,7 @@ This npm package is the latest Termux-focused line: `@mmmbuto/codex-cli-termux`.
 If you want the separate multi-platform LTS line, use `@mmmbuto/codex-cli-lts`.
 
 **Supported platform:** Android Termux (ARM64)
-**Current package line:** `0.117.2-termux` (`beta`)
-
-**Stable latest line:** `0.116.2`
+**Current package line:** `0.117.2-termux`
 
 ---
 
@@ -72,7 +70,7 @@ pkg update && pkg upgrade -y
 pkg install nodejs-lts -y
 
 # Install latest Termux line
-npm install -g @mmmbuto/codex-cli-termux
+npm install -g @mmmbuto/codex-cli-termux@latest
 
 # Verify
 codex --version
@@ -82,7 +80,7 @@ codex login
 **Requirements:** Android 7+, ARM64, Node.js >=18 (recommended v22+), ~50MB storage
 
 **Current latest limitation:** voice/realtime audio is intentionally disabled in the
-published Termux build to keep packaged binaries free of Android-only audio linker
+published Termux builds to keep packaged binaries free of Android-only audio linker
 dependencies.
 
 ---

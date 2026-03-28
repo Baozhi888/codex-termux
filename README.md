@@ -1,6 +1,6 @@
 # Codex Termux
 
-> Latest line built from upstream OpenAI Codex `rust-v0.117.0` for Android Termux. The separate LTS line remains available for Termux, Linux, and macOS as `@mmmbuto/codex-cli-lts`.
+> Latest Termux line built from upstream OpenAI Codex `rust-v0.117.0`. The separate LTS line remains available for Termux, Linux, and macOS as `@mmmbuto/codex-cli-lts`.
 
 [![npm termux](https://img.shields.io/npm/v/@mmmbuto/codex-cli-termux?style=flat-square&logo=npm)](https://www.npmjs.org/package/@mmmbuto/codex-cli-termux)
 [![npm lts](https://img.shields.io/npm/v/@mmmbuto/codex-cli-lts?style=flat-square&logo=npm)](https://www.npmjs.org/package/@mmmbuto/codex-cli-lts)
@@ -11,7 +11,7 @@
 
 ## About
 
-This fork keeps two release lines:
+This fork keeps two public release lines:
 - `main`: latest Termux-focused line published as `@mmmbuto/codex-cli-termux`
 - `lts`: long-term support line published as `@mmmbuto/codex-cli-lts`
 
@@ -19,7 +19,7 @@ The latest line tracks upstream OpenAI Codex closely and applies only the compat
 
 ### Release Lines
 
-- **Latest**: Termux-only, tracks upstream OpenAI closely
+- **Latest**: `@mmmbuto/codex-cli-termux@0.117.2-termux`
 - **LTS**: Long-term support based on upstream rust-v0.80.0, minimal features + security patches to maintain /chat compatibility
 
 **Supported Platforms:**
@@ -102,7 +102,7 @@ pkg update && pkg upgrade -y
 pkg install nodejs-lts -y
 
 # Latest Termux line
-npm install -g @mmmbuto/codex-cli-termux
+npm install -g @mmmbuto/codex-cli-termux@latest
 
 # LTS line
 npm install -g @mmmbuto/codex-cli-lts
@@ -114,8 +114,10 @@ codex login
 
 **Requirements:** Android 7+, ARM64, Node.js >=18 (recommended v22+), ~50MB storage
 
+**Current latest:** `0.117.2-termux`
+
 **Current latest limitation:** voice/realtime audio is intentionally disabled in the
-published Termux build to keep packaged binaries free of Android-only audio linker
+published Termux builds to keep packaged binaries free of Android-only audio linker
 dependencies.
 
 ---
