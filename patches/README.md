@@ -5,8 +5,8 @@ This file tracks fork-specific changes against upstream OpenAI Codex.
 - Fork repo: `DioNanos/codex-termux`
 - Upstream repo: `openai/codex`
 - Baseline used for this inventory: `rust-v0.117.0`
-- Current fork release: `v0.116.0-termux` (prep)
-- Last update: 2026-03-20
+- Current fork release: `v0.117.0-termux`
+- Last update: 2026-03-27
 
 Scope note:
 - This inventory is Termux-fork only.
@@ -59,6 +59,18 @@ These are the practical fork deltas most relevant for end users.
 - Goal: fix failures like:
   - `CANNOT LINK EXECUTABLE ... libc++_shared.so not found`
   when tools invoke binaries directly without Node wrapper env.
+
+### Patch #10a - Wrapped self-exe propagation for helper aliases (0.117.0)
+- Files:
+  - `npm-package/bin/codex`
+  - `npm-package/bin/codex-exec`
+  - `npm-package/bin/codex.js`
+  - `npm-package/bin/codex-exec.js`
+  - `codex-rs/arg0/src/lib.rs`
+- Change:
+  - launchers export `CODEX_SELF_EXE` to the wrapped entrypoint path.
+  - `arg0` prefers that override instead of `current_exe()` when recording `codex_self_exe` and when materializing helper aliases like `apply_patch`.
+- Goal: ensure helper re-exec paths go back through the wrapper so bundled `libc++_shared.so` remains reachable on Termux.
 
 ### Patch #11 - Disable voice/realtime audio in published Termux builds (0.111.0)
 - Files:

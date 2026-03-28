@@ -22,6 +22,8 @@ mod compact_remote;
 pub use codex_thread::CodexThread;
 pub use codex_thread::ThreadConfigSnapshot;
 mod agent;
+#[cfg(all(target_os = "android", target_arch = "aarch64"))]
+mod android_clear_cache;
 mod codex_delegate;
 mod command_canonicalization;
 mod commit_attribution;

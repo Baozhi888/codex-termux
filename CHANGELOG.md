@@ -9,11 +9,23 @@
 - Kept Android browser login patch (`termux-open-url`) for auth flow.
 - Kept Android no-voice policy for `codex-tui` consumers on Android.
 - Kept launcher hardening (`codex.bin` / `codex-exec.bin` + sanitized `LD_LIBRARY_PATH`).
-- Updated version references to `0.117.0-termux` throughout project.
+- Fixed `apply_patch` helper re-exec on Termux so alias/symlink launches use the wrapped launcher path instead of `codex.bin` directly.
+- Revalidated update logic for the fork release channel (`DioNanos/codex-termux`) and `-termux` version parsing.
+- Added the optional `termux-tts` skill for Termux text-to-speech workflows.
+- Added Android ARM64 maintainer handling for fork-owned `rusty_v8` artifacts when upstream does not ship a usable pair.
+- Fixed Android cross-build linkage for `rusty_v8` consumers by moving the Termux release target to Android API 28 and providing an AArch64 `__clear_cache` shim for V8.
+- Updated version references to `0.117.0-termux` throughout project and npm metadata.
 
 ### Version
-- npm package target: `@mmmbuto/codex-cli-termux@0.117.0`
+- npm package target: `@mmmbuto/codex-cli-termux@0.117.0-termux`
 - Upstream base: `rust-v0.117.0`
+
+### Verification
+- `bash verify-patches.sh` passes for the latest Termux patch set.
+- Rust-side launcher regression coverage was added for `CODEX_SELF_EXE` override handling.
+- Android ARM64 package binaries were rebuilt on the maintainer host and packed into the npm wrapper together with `libc++_shared.so`.
+- Fork-owned `rusty_v8` Android artifacts were produced locally for `v8 = 146.4.0` and used for the successful release build.
+- Manual on-device Termux validation remains the final post-publish gate.
 
 ---
 

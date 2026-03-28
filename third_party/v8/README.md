@@ -43,5 +43,42 @@ directly. We do not use `RUSTY_V8_MIRROR` for musl because the upstream `v8`
 crate hardcodes a `v<crate_version>` tag layout, while our musl artifacts are
 published under `rusty-v8-v<crate_version>`.
 
+Android latest maintenance follows the same `archive + binding` model when
+upstream does not publish a usable `aarch64-linux-android` pair. Maintainers can
+consume fork-owned Android assets with:
+
+```bash
+python3 scripts/fetch_rusty_v8_android.py
+```
+
+That helper resolves the pinned crate version, downloads the matching pair from
+the fork release tag, prints SHA256 values, and emits the `RUSTY_V8_ARCHIVE`
+and `RUSTY_V8_SRC_BINDING_PATH` exports needed for Cargo builds.
+
+If the Android pair still needs to be produced, build it from a full
+`denoland/rusty_v8` checkout at the matching tag, not from the crates.io source
+bundle alone. In local verification for `v146.4.0`, Android source-build
+progress required a newer `gn` binary plus Chromium-facing submodules such as
+`build`, `v8`, `tools/clang`, and `buildtools`.
+
+Use this helper to prepare the checkout at the exact pinned tag:
+
+```bash
+python3 scripts/prepare_rusty_v8_android_source.py
+```
+
+The helper initializes the required Chromium-facing submodules recursively and
+pre-creates `third_party/android_toolchain/ndk -> ../android_ndk`, which keeps
+Android GN/sysroot lookups aligned with the NDK directory that `rusty_v8`
+downloads locally during source builds.
+
+Before the first Android source-build in that checkout, install the host
+Chromium sysroot:
+
+```bash
+cd .artifacts/rusty_v8-src/v146.4.0
+python3 build/linux/sysroot_scripts/install-sysroot.py --arch=amd64
+```
+
 Do not mix artifacts across crate versions. The archive and binding must match
 the exact resolved `v8` crate version in `codex-rs/Cargo.lock`.

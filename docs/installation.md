@@ -91,6 +91,10 @@ pkg update && pkg upgrade -y
 pkg install nodejs-lts -y
 ```
 
+**`apply_patch` fails with `libc++_shared.so not found`:**
+- Update to a build that includes the wrapped self-exe launcher fix.
+- The packaged helper path must relaunch through `bin/codex`, not `bin/codex.bin`.
+
 ### Linux Issues
 
 **Permission denied on install:**

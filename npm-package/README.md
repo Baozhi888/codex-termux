@@ -1,6 +1,6 @@
 # Codex CLI for Termux
 
-> Latest Android Termux package built from upstream OpenAI Codex `rust-v0.116.0`.
+> Latest Android Termux package built from upstream OpenAI Codex `rust-v0.117.0`.
 
 [![npm termux](https://img.shields.io/npm/v/@mmmbuto/codex-cli-termux?style=flat-square&logo=npm)](https://www.npmjs.org/package/@mmmbuto/codex-cli-termux)
 [![npm lts](https://img.shields.io/npm/v/@mmmbuto/codex-cli-lts?style=flat-square&logo=npm)](https://www.npmjs.org/package/@mmmbuto/codex-cli-lts)
@@ -16,6 +16,7 @@ This npm package is the latest Termux-focused line: `@mmmbuto/codex-cli-termux`.
 If you want the separate multi-platform LTS line, use `@mmmbuto/codex-cli-lts`.
 
 **Supported platform:** Android Termux (ARM64)
+**Current package line:** `0.117.0-termux`
 
 ---
 
@@ -41,6 +42,10 @@ We apply patches for issues that:
 **Termux build note:** the published latest Termux package disables voice/realtime audio.
 This avoids Android linker failures such as missing `libOpenSLES.so` while keeping the
 rest of the upstream CLI behavior intact.
+
+The packaged launchers also preserve a wrapped self-exe path for helper tools.
+This keeps relaunches such as `apply_patch` on the launcher path so bundled
+libraries like `libc++_shared.so` remain visible on Termux.
 
 ### LTS Updates
 - Based on rust-v0.80.0 (minimal features + security only)

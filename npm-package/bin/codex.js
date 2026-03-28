@@ -29,6 +29,7 @@ function sanitizeLdLibraryPath(binDir) {
 // Keep bundled libc++ visible while avoiding Termux liblzma conflicts.
 const env = { ...process.env, CODEX_MANAGED_BY_NPM: '1' };
 const binDir = __dirname;
+env.CODEX_SELF_EXE = binaryPath;
 env.LD_LIBRARY_PATH = sanitizeLdLibraryPath(binDir);
 
 let cachedSubcommands;

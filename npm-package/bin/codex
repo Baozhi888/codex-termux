@@ -32,6 +32,7 @@ sanitize_ld_library_path() {
 }
 
 export CODEX_MANAGED_BY_NPM=1
+export CODEX_SELF_EXE="$SCRIPT_DIR/codex"
 export LD_LIBRARY_PATH="$(sanitize_ld_library_path)"
 
 exec "$SCRIPT_DIR/codex.bin" "$@"

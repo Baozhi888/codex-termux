@@ -75,6 +75,10 @@ We apply patches for issues that:
 This avoids Android linker failures such as missing `libOpenSLES.so` while keeping the
 rest of the upstream CLI behavior intact.
 
+The npm launchers also preserve a wrapped self-exe path for helper tools.
+This keeps helper re-exec flows such as `apply_patch` on the launcher path so
+bundled Termux libraries like `libc++_shared.so` remain available.
+
 ### LTS Updates
 - Based on rust-v0.80.0 (minimal features + security only)
 - Maintains /chat wire API compatibility
